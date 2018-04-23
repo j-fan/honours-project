@@ -17,6 +17,6 @@
 /orbbec-blob/oscpack/osc
 /orbbec-blob/oscpack/tests
 /orbbec-blob/oscpack/ip
-/orbbec-blob/oscpack/bin/*.exe
-/orbbec-blob/oscpack/bin/*.pdb
-/orbbec-blob/oscpack/bin/*.ilk
+/orbbec-blob/oscpack/bin/Debug/*.exe
+/orbbec-blob/oscpack/bin/Debug/*.pdb
+/orbbec-blob/oscpack/bin/Debug/*.ilk
