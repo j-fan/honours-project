@@ -1,6 +1,7 @@
 *.meta
 *.zip
 /UnityOSC-master
+/resources
 /attractor/Assets/Extra
 /attractor/Assets/OSCTest
 /attractor/Assets/PostProcessing
@@ -8,7 +9,7 @@
 /attractor/Library
 /attractor/.vs
 /attractor/Temp
-/attractor/Temp/UnityPackageManager
+/attractor/UnityPackageManager
 /orbbec-blob/x64
 /orbbec-blob/Debug
 /orbbec-blob/webcam/Debug
