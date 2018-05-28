@@ -60,8 +60,10 @@ int main(int argc, char* argv[])
 			cout << "\nThis image mode is not supported by the device, the default value (CV_CAP_OPENNI_SXGA_15HZ) will be used.\n" << endl;
 	}
 
-	// turn on depth
+	// turn on depth img
 	capture.set(CAP_OPENNI_DEPTH_GENERATOR_PRESENT, true);
+	// turn on colour img
+	capture.set(CAP_OPENNI_IMAGE_GENERATOR_PRESENT, true);
 
 	// Print some avalible device settings.
 	if (capture.get(CAP_OPENNI_DEPTH_GENERATOR_PRESENT))
@@ -95,6 +97,7 @@ static void sendOSC(vector<Rect> boundRect, int rows, int cols) {
 	for (int i = 0; i < boundRect.size(); i++) {
 		float centreX = (boundRect[i].x + boundRect[i].width / 2) / (float)cols;
 		float centreY = (boundRect[i].y + boundRect[i].height / 2) / (float)rows;
+
 		p << (float)centreX;
 		p << (float)centreY;
 	}
@@ -104,18 +107,21 @@ static void sendOSC(vector<Rect> boundRect, int rows, int cols) {
 
 static void blobDetect(Mat& image) {
 
-	float scaleFactor = 0.9f;
+	float scaleFactor = 0.4f;
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
-	uint16_t maxDistance = 1000; //measured in mm
+	uint16_t maxDistance = 2000; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{
 		for (int x = 0; x < image.cols; x++)
 		{
 			uint16_t  p = image.at<uint16_t>(y, x);
-			if (p > maxDistance && p > minDistance) {
+			if (p < maxDistance && p > minDistance) {
+				image.at<uint16_t>(y, x) = p;
+			}
+			else {
 				image.at<uint16_t>(y, x) = 0;
 			}
 
@@ -126,27 +132,29 @@ static void blobDetect(Mat& image) {
 
 	//down scale image to increase performance
 	resize(image, image, Size(image.cols/2,image.rows/2));
+	imshow("Raw Image", image);
 
 	// Apply dilation to reduce noise
-	int dilation_size = 5;
+	int dilation_size = 6;
 	Mat element = getStructuringElement(MORPH_ELLIPSE,
 		Size(2 * dilation_size + 1, 2 * dilation_size + 1),
 		Point(dilation_size, dilation_size));
 	dilate(image, image, element);
 
 	// Apply Blur to reduce noise further
-	GaussianBlur(image, image, Size(11, 11), 0, 0);
+	//GaussianBlur(image, image, Size(11, 11), 0, 0);
 
 	// Find Blobs by finding contours and calculate bounding boxes
-	Mat threshold_output;
+	Mat canny_output;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	int thresh = 100;
 
-	// Detect edges using Threshold
-	threshold(image, threshold_output, thresh, 255, THRESH_BINARY);
+	// Detect edges using canny
+	Canny(image, canny_output, thresh, thresh * 2, 3);
+	imshow("canny output", canny_output);
 	// Find contours
-	findContours(threshold_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+	findContours(canny_output, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_KCOS, Point(0, 0));
 
 	// Approximate contours to polygons + get bounding rects and circles
 	vector<vector<Point> > contours_poly(contours.size());
@@ -161,22 +169,31 @@ static void blobDetect(Mat& image) {
 		//minEnclosingCircle((Mat)contours_poly[i], center[i], radius[i]);
 	}
 
-	/// Draw polygonal contour + bonding rects + circles
-	Mat drawing = Mat::zeros(threshold_output.size(), CV_8UC3);
+	// Draw polygonal contour + bonding rects + circles
+	Mat drawing = Mat::zeros(canny_output.size(), CV_8UC3);
+	vector<Rect> reducedRects;
 	for (int i = 0; i< contours.size(); i++)
 	{
-		Point textOrg = (boundRect[i].tl(), boundRect[i].br());
-		putText(drawing, std::to_string(i), textOrg, FONT_HERSHEY_PLAIN, 2, Scalar(255, 255, 255, 255), 2);
+		double area = boundRect[i].height * boundRect[i].width;
+		//remove small boxes
+		if (area > 5000) {
+			reducedRects.push_back(boundRect[i]);
+			float centreX = (boundRect[i].x + boundRect[i].width / 2) ;
+			float centreY = (boundRect[i].y + boundRect[i].height / 2) ;
+			Point textOrg = Point(centreX,centreY);
+			putText(drawing, std::to_string(i), textOrg, FONT_HERSHEY_PLAIN, 2, Scalar(255, 255, 255, 255), 2);
 
-		Scalar color = Scalar(255, 255, 255);
-		drawContours(drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point());
-		rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
-		//circle(drawing, center[i], (int)radius[i], color, 2, 8, 0);
+			Scalar color = Scalar(255, 255, 255);
+			drawContours(drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point());
+			rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
+			//circle(drawing, center[i], (int)radius[i], color, 2, 8, 0);
+		}
+
 	}
 
 	/// Show in a window
 	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
-	sendOSC(boundRect, drawing.rows, drawing.cols);
+	sendOSC(reducedRects, drawing.rows, drawing.cols);
 	imshow("Contours", drawing);
 
 }
@@ -185,6 +202,7 @@ static void showFrames(VideoCapture capture) {
 	for (;;)
 	{
 		Mat depthMap;
+		Mat colourImage;
 
 		if (!capture.grab())
 		{
@@ -195,12 +213,15 @@ static void showFrames(VideoCapture capture) {
 		{
 			if (capture.retrieve(depthMap, CAP_OPENNI_DEPTH_MAP))
 			{
-				const float scaleFactor = 0.05f;
-				Mat show; 
-				depthMap.convertTo(show, CV_8UC1, scaleFactor);
+				//const float scaleFactor = 0.05f;
+				//Mat show; 
+				//depthMap.convertTo(show, CV_8UC1, scaleFactor);
 				//imshow("depth map", show);
 				blobDetect(depthMap);
 			}
+
+			if (capture.retrieve(colourImage, CAP_OPENNI_BGR_IMAGE))
+				imshow("rgb image", colourImage);
 
 		}
 

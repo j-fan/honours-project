@@ -2,23 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleSeeker : MonoBehaviour {
+
+public class ParticleFlow : MonoBehaviour {
+
+    const int ELECTRIC = 0;
+    const int GRAVITY = 1;
+    const int SIMPLE = 2;
+    public int simType = 0;
 
     public Gradient particleColourGradient;
     public float forceMultiplier = 1.0f;
+    public Material sphereMat;
     float g = 1f;
     float mass = 3f;
+
     public OSC osc;
+    int numTargets = 0; //targets refer to targets detected by orbbec/opencv
 
     ParticleSystem ps;
-    int numAttractors = 3;
-    GameObject[] attractors;
+    int minAttractors = 5;
+    List<GameObject> attractors;
 
-    int numTargets = 0; //targets refer to targets detected by orbbec/opencv
-    float alpha = 0.05f; //lowpass filter positions for smooth movement
+    float alpha = 0.6f; //lowpass filter positions for smooth movement
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         ps = GetComponent<ParticleSystem>();
         initAttractors();
         osc.SetAddressHandler("/numPoints", setNumTargets);
@@ -33,12 +42,26 @@ public class ParticleSeeker : MonoBehaviour {
 
     void moveTargets(OscMessage message)
     {
-        if(numTargets > 0)
+
+        //find whether number of targets seen by camera or number of spheres is greater
+        int max;
+        if (numTargets > attractors.Count)
         {
-            Vector3 newPos = new Vector3(message.GetFloat(1) * 10, 0, message.GetFloat(0) * 10);
-            Vector3 oldPos = attractors[0].transform.localPosition;
-            attractors[0].transform.localPosition = newPos * alpha + (oldPos * (1 - alpha));
-            print(message);
+            max = attractors.Count;
+        }
+        else
+        {
+            max = numTargets;
+
+        }
+
+        for (int i=0; i < max; i++) {
+            Vector3 newPos = new Vector3(message.GetFloat(i) * 6, 0, message.GetFloat(i*2) * 9);
+            print(newPos);
+            Vector3 oldPos = attractors[i].transform.position;
+            //dampen for smooth movement
+            attractors[i].transform.position = newPos * alpha + (oldPos * (1 - alpha));
+            //print(message);
         }
 
     }
@@ -47,50 +70,61 @@ public class ParticleSeeker : MonoBehaviour {
     {
         // add variation to particle colour
         ParticleSystem.MainModule main = GetComponent<ParticleSystem>().main;
-        main.startColor = particleColourGradient.Evaluate(Random.Range(0f,1f));
+        main.startColor = particleColourGradient.Evaluate(Random.Range(0f, 1f));
     }
 
-    void LateUpdate () {
+    void LateUpdate()
+    {
 
         //put particles of the system into array & update them to gravity algorithm
-        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount]; 
-        ps.GetParticles(particles); 
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
+        ps.GetParticles(particles);
 
-        for (int i = 0; i < particles.Length; i++){
+        for (int i = 0; i < particles.Length; i++)
+        {
             ParticleSystem.Particle p = particles[i];
             Vector3 particleWorldPosition;
-            if(ps.main.simulationSpace == ParticleSystemSimulationSpace.Local)
+            if (ps.main.simulationSpace == ParticleSystemSimulationSpace.Local)
             {
                 particleWorldPosition = transform.TransformPoint(p.position);
             }
-            else if(ps.main.simulationSpace == ParticleSystemSimulationSpace.Custom)
+            else if (ps.main.simulationSpace == ParticleSystemSimulationSpace.Custom)
             {
                 particleWorldPosition = ps.main.customSimulationSpace.TransformPoint(p.position);
-            } else
+            }
+            else
             {
                 particleWorldPosition = p.position;
             }
 
-            //simple attractor
-            //Vector3 totalForce = applySimple(particleWorldPosition);
+            Vector3 totalForce;
+            if (simType == SIMPLE)
+            {
+                totalForce = applySimple(particleWorldPosition);
+            } else if (simType == GRAVITY)
+            {
+                totalForce = applyGravity(particleWorldPosition);
+            } else if (simType == ELECTRIC)
+            {
+                totalForce = applyElectric(p);
+            } else
+            {
+                totalForce = applySimple(particleWorldPosition);
+            }
 
-            //gravitional field sim
-            //Vector3 totalForce = applyGravity(particleWorldPosition);
 
-            //electric field sim
-            Vector3 totalForce = applyElectric(p);
+            if (simType != GRAVITY)
+            {
+                p.velocity = totalForce;    //velocity only to visualise field line style
+            } else
+            {
+                p.velocity += totalForce;   //with  acceleration
+            }
 
-            //rotate 90 deg right
-            //Vector3 right = Vector3.Cross(totalForce, Vector3.up);
-            //totalForce = Quaternion.AngleAxis(0, right) * totalForce;
-
-            //p.velocity += totalForce; //with  acceleration
-            p.velocity = totalForce;    //velocity only to visualise field line style
-            
             particles[i] = p;
         }
         ps.SetParticles(particles, particles.Length); //set updated particles into the system
-	}
+    }
 
     Vector3 applySimple(Vector3 particleWorldPosition)
     {
@@ -119,7 +153,8 @@ public class ParticleSeeker : MonoBehaviour {
         return totalForce;
     }
 
-    Vector3 applyElectric(ParticleSystem.Particle p) {
+    Vector3 applyElectric(ParticleSystem.Particle p)
+    {
         Vector3 totalForce = Vector3.zero;
         Vector3 force = Vector3.zero;
         int i = 0;
@@ -130,12 +165,13 @@ public class ParticleSeeker : MonoBehaviour {
             Mathf.Clamp(fieldMag, 0.0f, 5.0f);
 
             //alternate postive and negative charges
-            if(i % 2 == 0)
+            if (i % 2 == 0)
             {
                 force.x -= fieldMag * (p.position.x - a.transform.position.x) / dist;
                 force.y -= fieldMag * (p.position.y - a.transform.position.y) / dist;
                 force.z -= fieldMag * (p.position.z - a.transform.position.z) / dist;
-            } else
+            }
+            else
             {
                 force.x += fieldMag * (p.position.x - a.transform.position.x) / dist;
                 force.y += fieldMag * (p.position.y - a.transform.position.y) / dist;
@@ -144,19 +180,20 @@ public class ParticleSeeker : MonoBehaviour {
 
             i++;
         }
-        totalForce = force * forceMultiplier; 
+        totalForce = force * forceMultiplier;
         return totalForce;
     }
 
     void initAttractors()
     {
-        attractors = new GameObject[numAttractors];
-        for (int i = 0; i < numAttractors; i++)
+        attractors = new List<GameObject>();
+        for (int i = 0; i < minAttractors; i++)
         {
             GameObject newAttractor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            newAttractor.transform.position = new Vector3(i*3, 2.0f, i*3);
+            newAttractor.transform.position = new Vector3(0.0f, 2.0f, i * 3);
             newAttractor.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            attractors[i] = newAttractor;
+            //newAttractor.GetComponent<Renderer>().material = sphereMat;
+            attractors.Add(newAttractor);
         }
     }
 }
