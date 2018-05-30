@@ -4,7 +4,7 @@
 Target::Target(Rect r,Point p) {
 	centre = p;
 	bbox = r;
-	life = 6;
+	life =2;
 	tolerance = 75;
 	id = -1;
 }

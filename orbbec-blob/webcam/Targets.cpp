@@ -21,12 +21,11 @@ int Targets::addTarget(Target t) {
 	return toReplace >= 0 ? toReplace : targetList.size();
 }
 void Targets::ageTargets() {
-	for (std::vector<Target>::iterator it = targetList.begin(); it != targetList.end();) {
-		if (it->getLife() < 0) {
-			it = targetList.erase(it);
-		}
-		else {
-			++it;
+
+	for (int i = targetList.size() - 1; i >= 0; i--) {
+		targetList.at(i).die();
+		if (targetList.at(i).getLife() <= 0) {
+			targetList.erase(targetList.begin() + i);
 		}
 	}
 }

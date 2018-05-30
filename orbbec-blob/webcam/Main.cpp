@@ -97,9 +97,11 @@ static void sendOSC(int rows, int cols) {
 		<< osc::EndMessage
 		<< osc::BeginMessage("/points");
 
+
+
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = (targets.getTarget(i).getCentre().x) / (float)cols;
-		float centreY = (targets.getTarget(i).getCentre().y) / (float)rows;
+		float centreX = (targets.getTarget(i).getCentre().x) ;
+		float centreY = (targets.getTarget(i).getCentre().y);
 
 		p << (float)centreX;
 		p << (float)centreY;
@@ -114,7 +116,7 @@ static void blobDetect(Mat& image) {
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
-	uint16_t maxDistance = 2000; //measured in mm
+	uint16_t maxDistance = 1300; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{

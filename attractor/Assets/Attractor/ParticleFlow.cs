@@ -11,7 +11,7 @@ public class ParticleFlow : MonoBehaviour {
     public int simType = 0;
 
     public Gradient particleColourGradient;
-    public float forceMultiplier = 1.0f;
+    public float forceMultiplier = 0.2f;
     public Material sphereMat;
     float g = 1f;
     float mass = 3f;
@@ -23,7 +23,7 @@ public class ParticleFlow : MonoBehaviour {
     int minAttractors = 5;
     List<GameObject> attractors;
 
-    float alpha = 0.9f; //lowpass filter positions for smooth movement
+    float alpha = 1.0f; //lowpass filter positions for smooth movement
 
     // Use this for initialization
     void Start()
@@ -37,7 +37,7 @@ public class ParticleFlow : MonoBehaviour {
     void setNumTargets(OscMessage message)
     {
         numTargets = message.GetInt(0);
-        print("num blobs: " + numTargets);
+        //print("num blobs: " + numTargets);
     }
 
     void moveTargets(OscMessage message)
@@ -56,11 +56,10 @@ public class ParticleFlow : MonoBehaviour {
         }
 
         for (int i=0; i < max; i++) {
-            Vector3 newPos = new Vector3(message.GetFloat(i) * 6, 0, message.GetFloat(i*2) * 9);
-            print(newPos);
+            Vector3 newPos = new Vector3(message.GetFloat(i+1) / 20.0f , 0, message.GetFloat(i) / 20.0f );
             Vector3 oldPos = attractors[i].transform.position;
             //dampen for smooth movement
-            attractors[i].transform.position = newPos * alpha + (oldPos * (1 - alpha));
+            attractors[i].transform.position = newPos * alpha + (oldPos * (1.0f - alpha));
             //print(message);
         }
 
@@ -190,9 +189,9 @@ public class ParticleFlow : MonoBehaviour {
         for (int i = 0; i < minAttractors; i++)
         {
             GameObject newAttractor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            newAttractor.transform.position = new Vector3(0.0f, 2.0f, i * 3);
+            newAttractor.transform.position = new Vector3(0.0f, 0.0f, (minAttractors-i)*3);
             newAttractor.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            //newAttractor.GetComponent<Renderer>().material = sphereMat;
+            newAttractor.GetComponent<Renderer>().material = sphereMat;
             attractors.Add(newAttractor);
         }
     }
