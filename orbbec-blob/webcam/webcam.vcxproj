@@ -130,6 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Targets.cpp" />
+    <ClCompile Include="Target.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Target.h" />
+    <ClInclude Include="Targets.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

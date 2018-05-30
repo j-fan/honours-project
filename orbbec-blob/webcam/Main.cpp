@@ -8,6 +8,8 @@
 #include "osc/OscOutboundPacketStream.h"
 #include "ip/UdpSocket.h"
 
+#include "Targets.h"
+
 using namespace cv;
 using namespace std;
 
@@ -20,6 +22,7 @@ UdpTransmitSocket transmitSocket(IpEndpointName(ADDRESS, PORT));
 static void showFrames(VideoCapture capture);
 static void blobDetect(Mat& image);
 static void sendOSC(vector<Rect> boundRect, int rows, int cols);
+Targets targets;
 
 
 /*
@@ -84,19 +87,19 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-static void sendOSC(vector<Rect> boundRect, int rows, int cols) {
+static void sendOSC(int rows, int cols) {
 	char buffer[OUTPUT_BUFFER_SIZE];
 	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
 
 	p << osc::BeginBundleImmediate
 		<< osc::BeginMessage("/numPoints")
-		<< (int)boundRect.size()
+		<< (int)targets.getNumTargets()
 		<< osc::EndMessage
 		<< osc::BeginMessage("/points");
 
-	for (int i = 0; i < boundRect.size(); i++) {
-		float centreX = (boundRect[i].x + boundRect[i].width / 2) / (float)cols;
-		float centreY = (boundRect[i].y + boundRect[i].height / 2) / (float)rows;
+	for (int i = 0; i < targets.getNumTargets(); i++) {
+		float centreX = (targets.getTarget(i).getCentre().x) / (float)cols;
+		float centreY = (targets.getTarget(i).getCentre().y) / (float)rows;
 
 		p << (float)centreX;
 		p << (float)centreY;
@@ -107,7 +110,7 @@ static void sendOSC(vector<Rect> boundRect, int rows, int cols) {
 
 static void blobDetect(Mat& image) {
 
-	float scaleFactor = 0.4f;
+	float scaleFactor = 0.1f;
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
@@ -119,7 +122,7 @@ static void blobDetect(Mat& image) {
 		{
 			uint16_t  p = image.at<uint16_t>(y, x);
 			if (p < maxDistance && p > minDistance) {
-				image.at<uint16_t>(y, x) = p;
+				image.at<uint16_t>(y, x) = p ;
 			}
 			else {
 				image.at<uint16_t>(y, x) = 0;
@@ -129,20 +132,20 @@ static void blobDetect(Mat& image) {
 	}
 
 	image.convertTo(image, CV_8UC1, scaleFactor);
+	//convert to colour to help distinguish overlapping objects (of different depth)
+	applyColorMap(image, image, COLORMAP_JET);
 
 	//down scale image to increase performance
 	resize(image, image, Size(image.cols/2,image.rows/2));
 	imshow("Raw Image", image);
 
 	// Apply dilation to reduce noise
-	int dilation_size = 6;
+	int dilation_size = 3;
 	Mat element = getStructuringElement(MORPH_ELLIPSE,
 		Size(2 * dilation_size + 1, 2 * dilation_size + 1),
 		Point(dilation_size, dilation_size));
 	dilate(image, image, element);
 
-	// Apply Blur to reduce noise further
-	//GaussianBlur(image, image, Size(11, 11), 0, 0);
 
 	// Find Blobs by finding contours and calculate bounding boxes
 	Mat canny_output;
@@ -150,50 +153,44 @@ static void blobDetect(Mat& image) {
 	vector<Vec4i> hierarchy;
 	int thresh = 100;
 
-	// Detect edges using canny
+	// Detect edges using canny & find contours
 	Canny(image, canny_output, thresh, thresh * 2, 3);
 	imshow("canny output", canny_output);
-	// Find contours
 	findContours(canny_output, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_KCOS, Point(0, 0));
 
-	// Approximate contours to polygons + get bounding rects and circles
+	// Draw bounding boxes
 	vector<vector<Point> > contours_poly(contours.size());
-	vector<Rect> boundRect(contours.size());
-	vector<Point2f>center(contours.size());
-	vector<float>radius(contours.size());
-
-	for (int i = 0; i < contours.size(); i++)
-	{
-		approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
-		boundRect[i] = boundingRect(Mat(contours_poly[i]));
-		//minEnclosingCircle((Mat)contours_poly[i], center[i], radius[i]);
-	}
-
-	// Draw polygonal contour + bonding rects + circles
 	Mat drawing = Mat::zeros(canny_output.size(), CV_8UC3);
-	vector<Rect> reducedRects;
+
 	for (int i = 0; i< contours.size(); i++)
 	{
-		double area = boundRect[i].height * boundRect[i].width;
+		approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
+		Rect boundRect = boundingRect(Mat(contours_poly[i]));
+		double area = boundRect.height * boundRect.width;
+
 		//remove small boxes
-		if (area > 5000) {
-			reducedRects.push_back(boundRect[i]);
-			float centreX = (boundRect[i].x + boundRect[i].width / 2) ;
-			float centreY = (boundRect[i].y + boundRect[i].height / 2) ;
-			Point textOrg = Point(centreX,centreY);
-			putText(drawing, std::to_string(i), textOrg, FONT_HERSHEY_PLAIN, 2, Scalar(255, 255, 255, 255), 2);
+		if (area > 2000) {
+
+			float centreX = (boundRect.x + boundRect.width / 2) ;
+			float centreY = (boundRect.y + boundRect.height / 2) ;
+			Point centre = Point(centreX,centreY);
+
+			Target newTarget = Target(boundRect, centre);
+			int id = targets.addTarget(newTarget);
+			
+			if (id > targets.getNumTargets() || id < 0) id = -1;
+			putText(drawing, std::to_string(id), centre, FONT_HERSHEY_PLAIN, 2, Scalar(255, 255, 255, 255), 2);
 
 			Scalar color = Scalar(255, 255, 255);
 			drawContours(drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point());
-			rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
+			rectangle(drawing, boundRect.tl(), boundRect.br(), color, 2, 8, 0);
 			//circle(drawing, center[i], (int)radius[i], color, 2, 8, 0);
 		}
-
 	}
 
 	/// Show in a window
 	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
-	sendOSC(reducedRects, drawing.rows, drawing.cols);
+	sendOSC(drawing.rows, drawing.cols);
 	imshow("Contours", drawing);
 
 }
@@ -223,6 +220,7 @@ static void showFrames(VideoCapture capture) {
 			if (capture.retrieve(colourImage, CAP_OPENNI_BGR_IMAGE))
 				imshow("rgb image", colourImage);
 
+			targets.ageTargets();
 		}
 
 		if (waitKey(30) >= 0)

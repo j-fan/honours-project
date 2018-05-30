@@ -23,7 +23,7 @@ public class ParticleFlow : MonoBehaviour {
     int minAttractors = 5;
     List<GameObject> attractors;
 
-    float alpha = 0.6f; //lowpass filter positions for smooth movement
+    float alpha = 0.9f; //lowpass filter positions for smooth movement
 
     // Use this for initialization
     void Start()
