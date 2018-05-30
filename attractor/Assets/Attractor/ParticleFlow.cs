@@ -190,7 +190,7 @@ public class ParticleFlow : MonoBehaviour {
         {
             GameObject newAttractor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             newAttractor.transform.position = new Vector3(i * 3, 0.0f, (minAttractors-i)*3);
-            newAttractor.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            newAttractor.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             newAttractor.GetComponent<Renderer>().material = sphereMat;
             attractors.Add(newAttractor);
         }
