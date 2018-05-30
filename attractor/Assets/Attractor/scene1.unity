@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0.52
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: cb8d8b52af124ad46a265224188200e7, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 1941125}
   - component: {fileID: 1941124}
   - component: {fileID: 1941128}
+  - component: {fileID: 1941129}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -207,6 +208,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: 260666d190a389944a5e61b89b49a33a, type: 2}
+--- !u!45 &1941129
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1941123}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1 &780599240
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +314,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.02
+    widthMultiplier: 0.03
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -426,7 +435,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 810598453}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -2.26, y: 5.79, z: -0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -528,6 +537,7 @@ GameObject:
   - component: {fileID: 1584898448}
   - component: {fileID: 1584898447}
   - component: {fileID: 1584898446}
+  - component: {fileID: 1584898450}
   m_Layer: 0
   m_Name: Particle System Line
   m_TagString: Untagged
@@ -551,7 +561,7 @@ MonoBehaviour:
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.5862069, b: 1, a: 1}
-    key1: {r: 1, g: 0.008047581, b: 0.39798763, a: 1}
+    key1: {r: 0.008047581, g: 1, b: 0.75372225, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -696,7 +706,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 229719269
+  randomSeed: -1148704600
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -848,7 +858,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1251,7 +1261,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -4005,12 +4015,29 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1584898445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.89, y: -1.21, z: 8.36}
+  m_LocalPosition: {x: 7.84, y: -1.21, z: -7.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1584898450
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1584898445}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e8dcf880e6fbae443a2a421da8bbbf92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1795661427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4024,6 +4051,7 @@ GameObject:
   - component: {fileID: 1795661429}
   - component: {fileID: 1795661428}
   - component: {fileID: 1795661432}
+  - component: {fileID: 1795661433}
   m_Layer: 0
   m_Name: Particle System Circle
   m_TagString: Untagged
@@ -4093,7 +4121,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 921430e1ae320bf439f3318afb60d161, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4192,7 +4220,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2100676928
+  randomSeed: -1549685576
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4344,7 +4372,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7520,5 +7548,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDistance: 3
   maxConnections: 5
-  maxLineRenderers: 100
+  maxLineRenderers: 0
   lineRendererTemplate: {fileID: 805699874}
+--- !u!95 &1795661433
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1795661427}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 839dc28ad64d38449aeb2af8831e04e3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1

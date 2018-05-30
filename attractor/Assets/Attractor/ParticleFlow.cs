@@ -37,7 +37,7 @@ public class ParticleFlow : MonoBehaviour {
     void setNumTargets(OscMessage message)
     {
         numTargets = message.GetInt(0);
-        //print("num blobs: " + numTargets);
+        print("num blobs: " + numTargets);
     }
 
     void moveTargets(OscMessage message)
