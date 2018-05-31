@@ -12,7 +12,7 @@ public class ParticleFlow : MonoBehaviour {
 
     public Gradient particleColourGradient;
     public float forceMultiplier = 0.2f;
-    public Material sphereMat;
+    public GameObject targetObject;
     float g = 1f;
     float mass = 3f;
 
@@ -20,10 +20,10 @@ public class ParticleFlow : MonoBehaviour {
     int numTargets = 0; //targets refer to targets detected by orbbec/opencv
 
     ParticleSystem ps;
-    int minAttractors = 5;
+    int currentAttractors = 15;
     List<GameObject> attractors;
 
-    float alpha = 1.0f; //lowpass filter positions for smooth movement
+    float alpha = 0.3f; //lowpass filter positions for smooth movement
 
     // Use this for initialization
     void Start()
@@ -44,25 +44,25 @@ public class ParticleFlow : MonoBehaviour {
     {
 
         //find whether number of targets seen by camera or number of spheres is greater
-        int max;
         if (numTargets > attractors.Count)
         {
-            max = attractors.Count;
+            currentAttractors = attractors.Count;
         }
         else
         {
-            max = numTargets;
-
+            currentAttractors = numTargets;
+            for(int i = numTargets; i < attractors.Count; i++)
+            {
+                attractors[i].transform.position = new Vector3(-20, -20, 20);
+            }
         }
 
-        for (int i=0; i < max; i++) {
+        for (int i=0; i < currentAttractors; i++) {
             Vector3 newPos = new Vector3(message.GetFloat(i+1) / 20.0f , 0, message.GetFloat(i) / 20.0f );
             Vector3 oldPos = attractors[i].transform.position;
             //dampen for smooth movement
             attractors[i].transform.position = newPos * alpha + (oldPos * (1.0f - alpha));
-            //print(message);
         }
-
     }
 
     void Update()
@@ -128,8 +128,9 @@ public class ParticleFlow : MonoBehaviour {
     Vector3 applySimple(Vector3 particleWorldPosition)
     {
         Vector3 direction = Vector3.zero;
-        foreach (GameObject a in attractors)
+        for(int i=0; i< currentAttractors; i++)
         {
+            GameObject a = attractors[i];
             direction += (a.transform.position - particleWorldPosition).normalized;
         }
         Vector3 totalForce = ((direction) * forceMultiplier) * Time.deltaTime;
@@ -138,9 +139,14 @@ public class ParticleFlow : MonoBehaviour {
 
     Vector3 applyGravity(Vector3 particleWorldPosition)
     {
-        Vector3 direction = Vector3.zero;
-        foreach (GameObject a in attractors)
+        if (currentAttractors == 0)
         {
+            return Vector3.zero;
+        }
+        Vector3 direction = Vector3.zero;
+        for (int i = 0; i < currentAttractors; i++)
+        {
+            GameObject a = attractors[i];
             direction += (a.transform.position - particleWorldPosition).normalized;
         }
         float magnitude = direction.magnitude;
@@ -156,9 +162,9 @@ public class ParticleFlow : MonoBehaviour {
     {
         Vector3 totalForce = Vector3.zero;
         Vector3 force = Vector3.zero;
-        int i = 0;
-        foreach (GameObject a in attractors)
+        for (int i = 0; i < currentAttractors; i++)
         {
+            GameObject a = attractors[i];
             float dist = Vector3.Distance(p.position, a.transform.position) * 100000;
             float fieldMag = 99999 / dist * dist;
             Mathf.Clamp(fieldMag, 0.0f, 5.0f);
@@ -177,7 +183,7 @@ public class ParticleFlow : MonoBehaviour {
                 force.z += fieldMag * (p.position.z - a.transform.position.z) / dist;
             }
 
-            i++;
+      
         }
         totalForce = force * forceMultiplier;
         return totalForce;
@@ -186,13 +192,29 @@ public class ParticleFlow : MonoBehaviour {
     void initAttractors()
     {
         attractors = new List<GameObject>();
-        for (int i = 0; i < minAttractors; i++)
+        for (int i = 0; i < currentAttractors; i++)
         {
-            GameObject newAttractor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            newAttractor.transform.position = new Vector3(i * 3, 0.0f, (minAttractors-i)*3);
-            newAttractor.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-            newAttractor.GetComponent<Renderer>().material = sphereMat;
+            Vector3 pos = new Vector3(i * 3, 0.0f, (currentAttractors - i) * 3);
+            Vector3 scale = new Vector3(0.8f, 0.8f, 0.8f);
+            GameObject newAttractor = CreateTarget();
+
+            newAttractor.transform.position = pos;
+            newAttractor.transform.localScale = scale;
             attractors.Add(newAttractor);
         }
     }
+    GameObject CreateTarget()
+    {
+        GameObject newAttractor;
+        if (targetObject == null)
+        {
+            newAttractor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        }
+        else
+        {
+            newAttractor = Instantiate(targetObject) as GameObject;
+        }
+        return newAttractor;
+    }
 }
+

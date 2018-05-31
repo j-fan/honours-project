@@ -26,15 +26,27 @@ AnimationClip:
         outSlope: 0
         tangentMode: 69
       - serializedVersion: 2
-        time: 17.466667
+        time: 19.85
         value: 0
         inSlope: -0
         outSlope: 136.36359
         tangentMode: 69
       - serializedVersion: 2
-        time: 18.2
+        time: 20.583334
         value: 100
         inSlope: 136.36359
+        outSlope: 9.771988
+        tangentMode: 69
+      - serializedVersion: 2
+        time: 41.05
+        value: 300
+        inSlope: 9.771988
+        outSlope: -4.4609666
+        tangentMode: 69
+      - serializedVersion: 2
+        time: 85.88333
+        value: 100
+        inSlope: -4.4609666
         outSlope: 0
         tangentMode: 69
       m_PreInfinity: 2
@@ -54,19 +66,19 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 30.333334
+        time: 61.066666
         value: 25
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 31.416666
+        time: 62.15
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 60.283333
+        time: 85.933334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -75,6 +87,46 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: EmissionModule.rateOverTime.scalar
+    path: 
+    classID: 198
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 39.116665
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 40.933334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 83.35
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 85.933334
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: TrailModule.widthOverTrail.scalar
     path: 
     classID: 198
     script: {fileID: 0}
@@ -100,13 +152,20 @@ AnimationClip:
       typeID: 198
       customType: 27
       isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 0
+      attribute: 3514095210
+      script: {fileID: 0}
+      typeID: 198
+      customType: 27
+      isPPtrCurve: 0
     pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 60.283333
+    m_StopTime: 85.933334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -132,15 +191,27 @@ AnimationClip:
         outSlope: 0
         tangentMode: 69
       - serializedVersion: 2
-        time: 17.466667
+        time: 19.85
         value: 0
         inSlope: -0
         outSlope: 136.36359
         tangentMode: 69
       - serializedVersion: 2
-        time: 18.2
+        time: 20.583334
         value: 100
         inSlope: 136.36359
+        outSlope: 9.771988
+        tangentMode: 69
+      - serializedVersion: 2
+        time: 41.05
+        value: 300
+        inSlope: 9.771988
+        outSlope: -4.4609666
+        tangentMode: 69
+      - serializedVersion: 2
+        time: 85.88333
+        value: 100
+        inSlope: -4.4609666
         outSlope: 0
         tangentMode: 69
       m_PreInfinity: 2
@@ -160,19 +231,19 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 30.333334
+        time: 61.066666
         value: 25
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 31.416666
+        time: 62.15
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 60.283333
+        time: 85.933334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -181,6 +252,46 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: EmissionModule.rateOverTime.scalar
+    path: 
+    classID: 198
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 39.116665
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 40.933334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 83.35
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 85.933334
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: TrailModule.widthOverTrail.scalar
     path: 
     classID: 198
     script: {fileID: 0}
