@@ -100,9 +100,9 @@ static void sendOSC(int rows, int cols) {
 
 
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = (targets.getTarget(i).getCentre().x) ;
-		float centreY = (targets.getTarget(i).getCentre().y);
-
+		float centreX = (targets.getTarget(i).getCentre().y) ;
+		float centreY = (targets.getTarget(i).getCentre().x);
+		if(i == 1) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
 		p << (float)centreY;
 	}
@@ -116,7 +116,7 @@ static void blobDetect(Mat& image) {
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
-	uint16_t maxDistance = 1300; //measured in mm
+	uint16_t maxDistance = 4000; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{
@@ -136,6 +136,10 @@ static void blobDetect(Mat& image) {
 	image.convertTo(image, CV_8UC1, scaleFactor);
 	//convert to colour to help distinguish overlapping objects (of different depth)
 	applyColorMap(image, image, COLORMAP_JET);
+
+
+	// rotate img
+	rotate(image, image, ROTATE_90_COUNTERCLOCKWISE);
 
 	//down scale image to increase performance
 	resize(image, image, Size(image.cols/2,image.rows/2));
@@ -219,8 +223,12 @@ static void showFrames(VideoCapture capture) {
 				blobDetect(depthMap);
 			}
 
-			if (capture.retrieve(colourImage, CAP_OPENNI_BGR_IMAGE))
+			if (capture.retrieve(colourImage, CAP_OPENNI_BGR_IMAGE)) {
+				// rotate img
+				rotate(colourImage, colourImage, ROTATE_90_COUNTERCLOCKWISE);
 				imshow("rgb image", colourImage);
+			}
+				
 
 			targets.ageTargets();
 		}

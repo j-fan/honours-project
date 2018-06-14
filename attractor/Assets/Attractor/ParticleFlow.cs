@@ -11,7 +11,7 @@ public class ParticleFlow : MonoBehaviour {
     public int simType = 0;
 
     public Gradient particleColourGradient;
-    public float forceMultiplier = 0.2f;
+    public float forceMultiplier = 1.0f;
     public GameObject targetObject;
     float g = 1f;
     float mass = 3f;
@@ -42,6 +42,8 @@ public class ParticleFlow : MonoBehaviour {
 
     void moveTargets(OscMessage message)
     {
+        //relay this message to maxMSP
+        osc.Send(message);
 
         //find whether number of targets seen by camera or number of spheres is greater
         if (numTargets > attractors.Count)
@@ -53,15 +55,22 @@ public class ParticleFlow : MonoBehaviour {
             currentAttractors = numTargets;
             for(int i = numTargets; i < attractors.Count; i++)
             {
-                attractors[i].transform.position = new Vector3(-20, -20, 20);
+                //hide offscreen
+                attractors[i].transform.position = new Vector3(-100, -100, 100);
             }
         }
 
-        for (int i=0; i < currentAttractors; i++) {
-            Vector3 newPos = new Vector3(message.GetFloat(i+1) / 20.0f , 0, message.GetFloat(i) / 20.0f );
+        for (int i=0; i < currentAttractors+1; i+=2) {
+            float x = message.GetFloat(i) / 6f;
+            float y = message.GetFloat(i+1) / 2f;
+            Vector3 newPos = new Vector3(x , 0, y );
+            if (i == 2)
+            {
+                print(newPos);
+            } 
             Vector3 oldPos = attractors[i].transform.position;
             //dampen for smooth movement
-            attractors[i].transform.position = newPos * alpha + (oldPos * (1.0f - alpha));
+            attractors[i].transform.position = newPos;// * alpha + (oldPos * (1.0f - alpha));
         }
     }
 
@@ -195,7 +204,7 @@ public class ParticleFlow : MonoBehaviour {
         for (int i = 0; i < currentAttractors; i++)
         {
             Vector3 pos = new Vector3(i * 3, 0.0f, (currentAttractors - i) * 3);
-            Vector3 scale = new Vector3(0.8f, 0.8f, 0.8f);
+            Vector3 scale = new Vector3(2.8f, 2.8f, 2.8f);
             GameObject newAttractor = CreateTarget();
 
             newAttractor.transform.position = pos;
