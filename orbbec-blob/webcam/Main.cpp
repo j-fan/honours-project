@@ -102,7 +102,7 @@ static void sendOSC(int rows, int cols) {
 	for (int i = 0; i < targets.getNumTargets(); i++) {
 		float centreX = (targets.getTarget(i).getCentre().y) ;
 		float centreY = (targets.getTarget(i).getCentre().x);
-		if(i == 1) cout << centreX << "...." << centreY << "\n";
+		//if(i == 1) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
 		p << (float)centreY;
 	}
@@ -112,11 +112,11 @@ static void sendOSC(int rows, int cols) {
 
 static void blobDetect(Mat& image) {
 
-	float scaleFactor = 0.1f;
+	float scaleFactor = 0.5f; //0.1f; //for colormap
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
-	uint16_t maxDistance = 4000; //measured in mm
+	uint16_t maxDistance = 2000; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{
@@ -135,7 +135,7 @@ static void blobDetect(Mat& image) {
 
 	image.convertTo(image, CV_8UC1, scaleFactor);
 	//convert to colour to help distinguish overlapping objects (of different depth)
-	applyColorMap(image, image, COLORMAP_JET);
+	//applyColorMap(image, image, COLORMAP_JET);
 
 
 	// rotate img
@@ -152,6 +152,9 @@ static void blobDetect(Mat& image) {
 		Point(dilation_size, dilation_size));
 	dilate(image, image, element);
 
+	//blur
+	medianBlur(image,image, 31);
+	imshow("Smoothed Image", image);
 
 	// Find Blobs by finding contours and calculate bounding boxes
 	Mat canny_output;
@@ -161,7 +164,7 @@ static void blobDetect(Mat& image) {
 
 	// Detect edges using canny & find contours
 	Canny(image, canny_output, thresh, thresh * 2, 3);
-	imshow("canny output", canny_output);
+	//imshow("canny output", canny_output);
 	findContours(canny_output, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_KCOS, Point(0, 0));
 
 	// Draw bounding boxes

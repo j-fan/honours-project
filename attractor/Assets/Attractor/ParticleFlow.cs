@@ -23,11 +23,17 @@ public class ParticleFlow : MonoBehaviour {
     int currentAttractors = 15;
     List<GameObject> attractors;
 
-    float alpha = 0.3f; //lowpass filter positions for smooth movement
+
+    float alpha = 0.1f; //lowpass filter positions for smooth movement, lower number for more smoothing
+
+    public AudioSource audioSource;
+    float[] asamples = new float[128];
+    public float avgFreq = 0.0f;
 
     // Use this for initialization
     void Start()
     {
+
         ps = GetComponent<ParticleSystem>();
         initAttractors();
         osc.SetAddressHandler("/numPoints", setNumTargets);
@@ -60,17 +66,13 @@ public class ParticleFlow : MonoBehaviour {
             }
         }
 
-        for (int i=0; i < currentAttractors+1; i+=2) {
-            float x = message.GetFloat(i) / 6f;
-            float y = message.GetFloat(i+1) / 2f;
+        for (int i=0; i < currentAttractors; i++) {
+            float x = message.GetFloat(i*2) / 6f;
+            float y = message.GetFloat(i+1) / 3f;
             Vector3 newPos = new Vector3(x , 0, y );
-            if (i == 2)
-            {
-                print(newPos);
-            } 
             Vector3 oldPos = attractors[i].transform.position;
             //dampen for smooth movement
-            attractors[i].transform.position = newPos;// * alpha + (oldPos * (1.0f - alpha));
+            attractors[i].transform.position = newPos * alpha + (oldPos * (1.0f - alpha));
         }
     }
 
@@ -79,6 +81,22 @@ public class ParticleFlow : MonoBehaviour {
         // add variation to particle colour
         ParticleSystem.MainModule main = GetComponent<ParticleSystem>().main;
         main.startColor = particleColourGradient.Evaluate(Random.Range(0f, 1f));
+        GetSpectrumAudioSource();
+    }
+
+    void GetSpectrumAudioSource()
+    {
+        audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
+
+        avgFreq = 0.0f;
+        for(int i = 0; i < asamples.Length-50; i++)
+        {
+            avgFreq = avgFreq + asamples[i];
+        }
+        avgFreq = avgFreq * avgFreq;
+        avgFreq = (avgFreq / (128-50));
+        
+
     }
 
     void LateUpdate()
@@ -124,10 +142,14 @@ public class ParticleFlow : MonoBehaviour {
             if (simType != GRAVITY)
             {
                 p.velocity = totalForce;    //velocity only to visualise field line style
+                p.velocity = p.velocity * avgFreq * 100;
             } else
             {
                 p.velocity += totalForce;   //with  acceleration
+                p.velocity = p.velocity * (avgFreq + 1);
             }
+
+           
 
             particles[i] = p;
         }
@@ -204,7 +226,7 @@ public class ParticleFlow : MonoBehaviour {
         for (int i = 0; i < currentAttractors; i++)
         {
             Vector3 pos = new Vector3(i * 3, 0.0f, (currentAttractors - i) * 3);
-            Vector3 scale = new Vector3(2.8f, 2.8f, 2.8f);
+            Vector3 scale = new Vector3(2.0f, 2.0f, 2.0f);
             GameObject newAttractor = CreateTarget();
 
             newAttractor.transform.position = pos;
