@@ -116,7 +116,7 @@ static void blobDetect(Mat& image) {
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
-	uint16_t maxDistance = 2000; //measured in mm
+	uint16_t maxDistance = 4000; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{
