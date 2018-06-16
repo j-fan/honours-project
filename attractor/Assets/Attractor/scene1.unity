@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07348073, g: 0.09329132, b: 0.12978259, a: 1}
+  m_IndirectSpecularColor: {r: 0.07348093, g: 0.093291424, b: 0.12978277, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2131,11 +2131,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   NoiseModule:
-    enabled: 0
+    enabled: 1
     strength:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2256,7 +2256,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     separateAxes: 0
-    frequency: 2
+    frequency: 0.2
     damping: 1
     octaves: 1
     octaveMultiplier: 0.5
@@ -11027,7 +11027,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  forceMultiplier: 1
+  forceMultiplier: 5
   targetObject: {fileID: 1156809590}
   osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
@@ -11391,7 +11391,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -874436593
+  randomSeed: -398326301
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14907,7 +14907,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 537622893
+  randomSeed: -1800638845
   InitialModule:
     serializedVersion: 3
     enabled: 1
