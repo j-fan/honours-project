@@ -8,13 +8,14 @@ public class ParticleFlow : MonoBehaviour {
     const int ELECTRIC = 0;
     const int GRAVITY = 1;
     const int SIMPLE = 2;
-    public int simType = 0;
+    const int VORTEX = 3;
+    public int simType = ELECTRIC;
 
     public Gradient particleColourGradient;
     public float forceMultiplier = 1.0f;
     public GameObject targetObject;
     float g = 1f;
-    float mass = 3f;
+    float mass = 2f;
 
     public OSC osc;
     int numTargets = 0; //targets refer to targets detected by orbbec/opencv
@@ -28,7 +29,8 @@ public class ParticleFlow : MonoBehaviour {
 
     public AudioSource audioSource;
     float[] asamples = new float[128];
-    public float avgFreq = 0.0f;
+    float avgFreq = 0.0f;
+    float runningAvgFreq = 0.0f;
 
     // Use this for initialization
     void Start()
@@ -89,13 +91,15 @@ public class ParticleFlow : MonoBehaviour {
         audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
 
         avgFreq = 0.0f;
-        for(int i = 0; i < asamples.Length-50; i++)
+        for(int i = 0; i < asamples.Length; i++)
         {
             avgFreq = avgFreq + asamples[i];
         }
         avgFreq = avgFreq * avgFreq;
-        avgFreq = (avgFreq / (128-50));
-        
+        avgFreq = avgFreq / asamples.Length;
+        runningAvgFreq = (avgFreq * alpha) + ((1 - alpha) * runningAvgFreq);
+
+
 
     }
 
@@ -133,20 +137,38 @@ public class ParticleFlow : MonoBehaviour {
             } else if (simType == ELECTRIC)
             {
                 totalForce = applyElectric(p);
+            } else if (simType == VORTEX) {
+                totalForce = applyVortex(p);
             } else
             {
                 totalForce = applySimple(particleWorldPosition);
             }
 
 
-            if (simType != GRAVITY)
+
+            if (simType == VORTEX)
+            {
+                if(currentAttractors == 0)
+                {
+                    p.velocity = new Vector3(0, 1, 0) * avgFreq * 100;
+                } else
+                {
+                    p.velocity = totalForce * avgFreq * 100;
+                }
+                
+            }
+            else if (simType != GRAVITY)
             {
                 p.velocity = totalForce;    //velocity only to visualise field line style
                 p.velocity = p.velocity * avgFreq * 100;
-            } else
+            }
+            else
             {
                 p.velocity += totalForce;   //with  acceleration
-                p.velocity = p.velocity * (avgFreq + 1);
+                float scale = runningAvgFreq * 100+0.75f;
+                Color original = particleColourGradient.Evaluate((float)i/particles.Length);
+                Color lerpedColor = Color.Lerp(new Color(0, 0, 0), original, scale);
+                p.color = lerpedColor;
             }
 
            
@@ -159,6 +181,7 @@ public class ParticleFlow : MonoBehaviour {
     Vector3 applySimple(Vector3 particleWorldPosition)
     {
         Vector3 direction = Vector3.zero;
+  
         for(int i=0; i< currentAttractors; i++)
         {
             GameObject a = attractors[i];
@@ -167,7 +190,42 @@ public class ParticleFlow : MonoBehaviour {
         Vector3 totalForce = ((direction) * forceMultiplier) * Time.deltaTime;
         return totalForce;
     }
+    /*
+     * algo from: https://gamedevelopment.tutsplus.com/tutorials/adding-turbulence-to-a-particle-system--gamedev-13332
+     */
+    Vector3 applyVortex(ParticleSystem.Particle p)
+    {
+        float distanceX = float.MaxValue;
+        float distanceY = float.MaxValue;
+        float distanceZ = float.MaxValue;
+        float distance = float.MaxValue;
+    
+        Vector3 direction = Vector3.zero;
+        for (int i = 0; i < currentAttractors; i++)
+        {
+            GameObject a = attractors[i];
+            if(Vector3.Distance(p.position,a.transform.position) < distance)
+            {
+                distanceX = (p.position.x - a.transform.position.x);
+                distanceY = (p.position.y - a.transform.position.y);
+                distanceZ = (p.position.z - a.transform.position.z);
+                distance = Vector3.Distance(p.position, a.transform.position);
+            }
 
+            direction += (a.transform.position - p.position).normalized;
+        }
+
+        float vortexScale = 1.0f;
+        float vortexSpeed = 1.0f;
+        float factor = 1 / (1 + (distanceX * distanceX + distanceZ * distanceZ)/ vortexScale);
+
+        float vx = distanceX  * vortexSpeed;
+        float vy = distanceY * vortexSpeed;
+        float vz = distanceZ * vortexSpeed;
+
+        Vector3 totalForce = Quaternion.AngleAxis(90, Vector3.up) * new Vector3(vx, 0, vz) * forceMultiplier + (direction);
+        return totalForce;
+    }
     Vector3 applyGravity(Vector3 particleWorldPosition)
     {
         if (currentAttractors == 0)
@@ -175,16 +233,18 @@ public class ParticleFlow : MonoBehaviour {
             return Vector3.zero;
         }
         Vector3 direction = Vector3.zero;
+        Vector3 totalForce = Vector3.zero;
         for (int i = 0; i < currentAttractors; i++)
         {
             GameObject a = attractors[i];
-            direction += (a.transform.position - particleWorldPosition).normalized;
-        }
-        float magnitude = direction.magnitude;
-        Mathf.Clamp(magnitude, 5.0f, 10.0f); //eliminate extreme result for very close or very far objects
+            direction = (a.transform.position - particleWorldPosition).normalized;
+            float magnitude = direction.magnitude;
+            Mathf.Clamp(magnitude, 5.0f, 10.0f); //eliminate extreme result for very close or very far objects
 
-        float gforce = (g * mass * mass) / direction.magnitude * direction.magnitude;
-        Vector3 totalForce = ((direction) * gforce) * Time.deltaTime;
+            float gforce = (g * mass * mass) / direction.magnitude * direction.magnitude;
+            totalForce += ((direction) * gforce) * Time.deltaTime;
+        }
+
         totalForce = totalForce * forceMultiplier;
         return totalForce;
     }
