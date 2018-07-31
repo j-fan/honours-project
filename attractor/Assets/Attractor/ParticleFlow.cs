@@ -25,7 +25,7 @@ public class ParticleFlow : MonoBehaviour {
     List<GameObject> attractors;
 
 
-    float alpha = 0.1f; //lowpass filter positions for smooth movement, lower number for more smoothing
+    float alpha = 0.4f; //lowpass filter positions for smooth movement, lower number for more smoothing
 
     public AudioSource audioSource;
     float[] asamples = new float[128];
@@ -69,8 +69,9 @@ public class ParticleFlow : MonoBehaviour {
         }
 
         for (int i=0; i < currentAttractors; i++) {
-            float x = message.GetFloat(i*2) / 6f;
-            float y = message.GetFloat(i+1) / 3f;
+            float x = message.GetFloat(i*2) / 3f;
+            float y = message.GetFloat(i*2+1) / 3f;
+            print(x + " " + y);
             Vector3 newPos = new Vector3(x , 0, y );
             Vector3 oldPos = attractors[i].transform.position;
             //dampen for smooth movement

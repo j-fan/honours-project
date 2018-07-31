@@ -100,9 +100,9 @@ static void sendOSC(int rows, int cols) {
 
 
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = (targets.getTarget(i).getCentre().y) ;
-		float centreY = (targets.getTarget(i).getCentre().x);
-		//if(i == 1) cout << centreX << "...." << centreY << "\n";
+		float centreX = (targets.getTarget(i).getCentre().x) ;
+		float centreY = (targets.getTarget(i).getCentre().y);
+		//if(i == 0) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
 		p << (float)centreY;
 	}
@@ -116,7 +116,7 @@ static void blobDetect(Mat& image) {
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
-	uint16_t maxDistance = 4000; //measured in mm
+	uint16_t maxDistance = 1200; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{
@@ -139,7 +139,7 @@ static void blobDetect(Mat& image) {
 
 
 	// rotate img
-	rotate(image, image, ROTATE_90_COUNTERCLOCKWISE);
+	//rotate(image, image, ROTATE_90_COUNTERCLOCKWISE);
 
 	//down scale image to increase performance
 	resize(image, image, Size(image.cols/2,image.rows/2));
@@ -178,7 +178,7 @@ static void blobDetect(Mat& image) {
 		double area = boundRect.height * boundRect.width;
 
 		//remove small boxes
-		if (area > 2000) {
+		if (area > 1000) {
 
 			float centreX = (boundRect.x + boundRect.width / 2) ;
 			float centreY = (boundRect.y + boundRect.height / 2) ;
@@ -228,7 +228,7 @@ static void showFrames(VideoCapture capture) {
 
 			if (capture.retrieve(colourImage, CAP_OPENNI_BGR_IMAGE)) {
 				// rotate img
-				rotate(colourImage, colourImage, ROTATE_90_COUNTERCLOCKWISE);
+				//rotate(colourImage, colourImage, ROTATE_90_COUNTERCLOCKWISE);
 				imshow("rgb image", colourImage);
 			}
 				
