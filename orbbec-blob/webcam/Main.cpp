@@ -98,10 +98,11 @@ static void sendOSC(int rows, int cols) {
 		<< osc::BeginMessage("/points");
 
 
-
+	// origin needs to be changed since opencv origin is top left,
+	// unity is bottom left
 	for (int i = 0; i < targets.getNumTargets(); i++) {
 		float centreX = (targets.getTarget(i).getCentre().x) ;
-		float centreY = (targets.getTarget(i).getCentre().y);
+		float centreY = rows - (targets.getTarget(i).getCentre().y);
 		//if(i == 0) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
 		p << (float)centreY;
