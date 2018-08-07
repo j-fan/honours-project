@@ -551,7 +551,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 321633485
+  randomSeed: -52942202
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3897,6 +3897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 0
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.006896496, b: 1, a: 1}
@@ -3927,8 +3928,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 10
-  targetObject: {fileID: 1605819652}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!199 &830631248
 ParticleSystemRenderer:
@@ -7411,6 +7410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 3
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 0.862069, g: 1, b: 0, a: 1}
@@ -7441,8 +7441,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 3
-  targetObject: {fileID: 1605819652}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!199 &891186113
 ParticleSystemRenderer:
@@ -7663,6 +7661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 3
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0.8068962, a: 1}
@@ -7693,8 +7692,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  targetObject: {fileID: 1605819652}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!199 &1237647046
 ParticleSystemRenderer:
@@ -7812,7 +7809,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -885516884
+  randomSeed: 1272928675
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8367,7 +8364,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -11128,6 +11125,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1280316904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1280316906}
+  - component: {fileID: 1280316905}
+  m_Layer: 0
+  m_Name: Targets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1280316905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1280316904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a61029cca67b58c4cb29787f3d72893a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  osc: {fileID: 780599241}
+  targetObject: {fileID: 1156809590}
+--- !u!4 &1280316906
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1280316904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 45.4, y: 0, z: 29.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1451594139
 GameObject:
   m_ObjectHideFlags: 0
@@ -11209,7 +11248,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 321633485
+  randomSeed: 550861653
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14540,6 +14579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 1
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.006896496, b: 1, a: 1}
@@ -14570,8 +14610,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 5
-  targetObject: {fileID: 1605819652}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!199 &1451594144
 ParticleSystemRenderer:
@@ -14693,6 +14731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 2
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.5862069, b: 1, a: 1}
@@ -14723,8 +14762,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 700
-  targetObject: {fileID: 1605819652}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!114 &1485981765
 MonoBehaviour:
@@ -14732,7 +14769,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1485981762}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3cc9aabfcd118eb4ab89753257362c6b, type: 3}
   m_Name: 
@@ -14857,7 +14894,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -57847733
+  randomSeed: -1702387175
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -18315,6 +18352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 1
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.25517225, b: 1, a: 1}
@@ -18345,8 +18383,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 3
-  targetObject: {fileID: 1156809590}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!199 &1584898447
 ParticleSystemRenderer:
@@ -18464,7 +18500,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1016706411
+  randomSeed: -1880051044
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -19019,7 +19055,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -21859,6 +21895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 0
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.5862069, b: 1, a: 1}
@@ -21889,8 +21926,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 15
-  targetObject: {fileID: 1605819652}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!199 &1795661429
 ParticleSystemRenderer:
@@ -22008,7 +22043,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -440974861
+  randomSeed: 574949872
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -22563,7 +22598,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -25356,6 +25391,48 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!1 &1905391626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1905391628}
+  - component: {fileID: 1905391627}
+  m_Layer: 0
+  m_Name: Box Flow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1905391627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1905391626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174cfdc140ea3314ca0df51c676d8e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawObj: {fileID: 0}
+  targets: {fileID: 1280316905}
+--- !u!4 &1905391628
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1905391626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 45.4, y: 0, z: 29.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2040180187
 GameObject:
   m_ObjectHideFlags: 0
@@ -25437,7 +25514,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 321633485
+  randomSeed: -1222279299
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -28768,6 +28845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simType: 3
+  targets: {fileID: 1280316905}
   particleColourGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
@@ -28798,8 +28876,6 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  targetObject: {fileID: 1605819652}
-  osc: {fileID: 780599241}
   audioSource: {fileID: 1553320891}
 --- !u!199 &2040180192
 ParticleSystemRenderer:

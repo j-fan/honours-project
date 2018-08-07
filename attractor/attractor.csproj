@@ -283,9 +283,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Attractor\boxes.cs" />
+    <Compile Include="Assets\Attractor\BoxFlow.cs" />
     <Compile Include="Assets\Attractor\ParticleFlow.cs" />
     <Compile Include="Assets\Attractor\ParticlePlexus.cs" />
+    <Compile Include="Assets\Attractor\Targets.cs" />
     <Compile Include="Assets\Extra\Scripts\Instantiator.cs" />
     <Compile Include="Assets\Extra\Scripts\ReceiveAll.cs" />
     <Compile Include="Assets\Extra\Scripts\ReceiveFFT.cs" />
