@@ -182,11 +182,17 @@ public class ParticleFlow : MonoBehaviour {
     Vector3 applySimple(Vector3 particleWorldPosition)
     {
         Vector3 direction = Vector3.zero;
-  
-        for(int i=0; i< currentAttractors; i++)
+        float distance = float.MaxValue; // used to find closest attractor
+
+        for (int i=0; i< currentAttractors; i++)
         {
             GameObject a = attractors[i];
-            direction += (a.transform.position - particleWorldPosition).normalized;
+            if (Vector3.Distance(particleWorldPosition, a.transform.position) < distance)
+            {
+                distance = Vector3.Distance(particleWorldPosition, a.transform.position);
+                direction = (a.transform.position - particleWorldPosition).normalized;
+            }
+
         }
         Vector3 totalForce = ((direction) * forceMultiplier) * Time.deltaTime;
         return totalForce;
@@ -216,13 +222,13 @@ public class ParticleFlow : MonoBehaviour {
             direction += (a.transform.position - p.position).normalized;
         }
 
-        float vortexScale = 1.0f;
-        float vortexSpeed = 1.0f;
+        float vortexScale = 10.0f;
+        float vortexSpeed = 10.0f;
         float factor = 1 / (1 + (distanceX * distanceX + distanceZ * distanceZ)/ vortexScale);
 
-        float vx = distanceX  * vortexSpeed;
-        float vy = distanceY * vortexSpeed;
-        float vz = distanceZ * vortexSpeed;
+        float vx = distanceX  * vortexSpeed * factor;
+        float vy = distanceY * vortexSpeed * factor;
+        float vz = distanceZ * vortexSpeed * factor;
 
         Vector3 totalForce = Quaternion.AngleAxis(90, Vector3.up) * new Vector3(vx, 0, vz) * forceMultiplier + (direction);
         return totalForce;
