@@ -62,7 +62,7 @@ public class Targets : MonoBehaviour {
         attractors = new List<GameObject>();
         for (int i = 0; i < currentAttractors; i++)
         {
-            Vector3 pos = new Vector3(i * 3, 0.0f, (currentAttractors - i) * 3);
+            Vector3 pos = new Vector3(Random.Range(0.0f, 100.0f), 0.0f, Random.Range(0.0f,60.0f));
             Vector3 scale = new Vector3(2.0f, 2.0f, 2.0f);
             GameObject newAttractor = CreateTarget();
 

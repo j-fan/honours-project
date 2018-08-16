@@ -9,6 +9,7 @@ public class ParticleFlow : MonoBehaviour {
     const int GRAVITY = 1;
     const int SIMPLE = 2;
     const int VORTEX = 3;
+    const int WALL = 4;
     public int simType = ELECTRIC;
 
     public Targets targets;
@@ -59,8 +60,6 @@ public class ParticleFlow : MonoBehaviour {
         avgFreq = avgFreq / asamples.Length;
         runningAvgFreq = (avgFreq * alpha) + ((1 - alpha) * runningAvgFreq);
 
-
-
     }
 
     void LateUpdate()
@@ -99,6 +98,9 @@ public class ParticleFlow : MonoBehaviour {
                 totalForce = applyElectric(p);
             } else if (simType == VORTEX) {
                 totalForce = applyVortex(p);
+            } else if (simType == WALL)
+            {
+                totalForce = new Vector3(0,particleWorldPosition.y,0);
             } else
             {
                 totalForce = applySimple(particleWorldPosition);
@@ -117,18 +119,18 @@ public class ParticleFlow : MonoBehaviour {
                 }
                 
             }
-            else if (simType != GRAVITY)
+            else if (simType == GRAVITY)
             {
-                p.velocity = totalForce;    //velocity only to visualise field line style
-                p.velocity = p.velocity * avgFreq * 100;
+                p.velocity += totalForce;   //with  acceleration
+                float scale = runningAvgFreq * 100 + 0.75f;
+                Color original = particleColourGradient.Evaluate((float)i / particles.Length);
+                Color lerpedColor = Color.Lerp(new Color(0, 0, 0), original, scale);
+                p.color = lerpedColor;
             }
             else
             {
-                p.velocity += totalForce;   //with  acceleration
-                float scale = runningAvgFreq * 100+0.75f;
-                Color original = particleColourGradient.Evaluate((float)i/particles.Length);
-                Color lerpedColor = Color.Lerp(new Color(0, 0, 0), original, scale);
-                p.color = lerpedColor;
+                p.velocity = totalForce;    //velocity only to visualise field line style
+                p.velocity = p.velocity * avgFreq * 100;
             }
 
            

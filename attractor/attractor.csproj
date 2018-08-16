@@ -284,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Attractor\BoxFlow.cs" />
+    <Compile Include="Assets\Attractor\MultiScreenOn.cs" />
     <Compile Include="Assets\Attractor\ParticleFlow.cs" />
     <Compile Include="Assets\Attractor\ParticlePlexus.cs" />
     <Compile Include="Assets\Attractor\Targets.cs" />
