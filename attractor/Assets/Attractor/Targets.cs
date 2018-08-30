@@ -8,7 +8,7 @@ public class Targets : MonoBehaviour {
     int numTargets = 0; //targets refer to targets detected by orbbec/opencv
     int currentAttractors = 15;
     List<GameObject> attractors;
-    float alpha = 0.1f; //lowpass filter positions for smooth movement, lower number for more smoothing
+    float alpha = 0.5f; //lowpass filter positions for smooth movement, lower number for more smoothing
     public GameObject targetObject;
 
     void Start () {

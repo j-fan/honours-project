@@ -101,7 +101,7 @@ static void sendOSC(int rows, int cols) {
 	// origin needs to be changed since opencv origin is top left,
 	// unity is bottom left
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = (targets.getTarget(i).getCentre().x) ;
+		float centreX = cols - (targets.getTarget(i).getCentre().x) ; //col - to flip for projection mode
 		float centreY = rows - (targets.getTarget(i).getCentre().y);
 		//if(i == 0) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
@@ -117,7 +117,7 @@ static void blobDetect(Mat& image) {
 
 	// clip the depth map to certain range to remove background
 	uint16_t minDistance = 10;
-	uint16_t maxDistance = 2000; //measured in mm
+	uint16_t maxDistance = 3000;//2000; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{
@@ -179,7 +179,7 @@ static void blobDetect(Mat& image) {
 		double area = boundRect.height * boundRect.width;
 
 		//remove small boxes
-		if (area > 1000) {
+		if (area > 0) { //1000 original
 
 			float centreX = (boundRect.x + boundRect.width / 2) ;
 			float centreY = (boundRect.y + boundRect.height / 2) ;

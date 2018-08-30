@@ -24,7 +24,6 @@ public class ParticleFlow : MonoBehaviour {
 
     ParticleSystem ps;
 
-
     public AudioSource audioSource;
     float[] asamples = new float[128];
     float avgFreq = 0.0f;
@@ -64,6 +63,7 @@ public class ParticleFlow : MonoBehaviour {
 
     void LateUpdate()
     {
+
 
         //put particles of the system into array & update them to gravity algorithm
         ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
