@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testScript : MonoBehaviour {
+public class testTube : MonoBehaviour {
 
     TubeRenderer tr;
 
