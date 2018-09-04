@@ -63,7 +63,7 @@ public class TubeTrails : MonoBehaviour {
                 }
                 else
                 {
-                    if(Vector3.Distance(particleWorldPosition,tubes[i][tubes[i].Count-1].point) > 0.5f)
+                    if(Vector3.Distance(particleWorldPosition,tubes[i][tubes[i].Count-1].point) > 0.1f)
                     {
                         // remove head and add new point
                         if (tubes[i].Count > tubeSteps)
@@ -73,7 +73,7 @@ public class TubeTrails : MonoBehaviour {
                         tubes[i].Add(new TubeRenderer.TubeVertex(particleWorldPosition, tubeWidth, p.GetCurrentColor(ps)));
                     }
 
-                     
+
                 }
             } else
             {

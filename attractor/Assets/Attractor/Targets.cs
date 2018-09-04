@@ -11,12 +11,32 @@ public class Targets : MonoBehaviour {
     float alpha = 0.5f; //lowpass filter positions for smooth movement, lower number for more smoothing
     public GameObject targetObject;
 
+    public AudioSource audioSource;
+    float[] asamples = new float[128];
+    float avgFreq = 0.0f;
+    float runningAvgFreq = 0.0f;
+    float audioAlpha = 0.1f;
+
     void Start () {
         initAttractors();
         osc.SetAddressHandler("/numPoints", setNumTargets);
         osc.SetAddressHandler("/points", moveTargets);
     }
 
+    void GetSpectrumAudioSource()
+    {
+        audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
+
+        avgFreq = 0.0f;
+        for (int i = 0; i < asamples.Length; i++)
+        {
+            avgFreq = avgFreq + asamples[i];
+        }
+        avgFreq = avgFreq * avgFreq;
+        avgFreq = avgFreq / asamples.Length;
+        runningAvgFreq = (avgFreq * audioAlpha) + ((1 - audioAlpha) * runningAvgFreq);
+
+    }
     void setNumTargets(OscMessage message)
     {
         numTargets = message.GetInt(0);
@@ -40,6 +60,7 @@ public class Targets : MonoBehaviour {
             {
                 //hide offscreen
                 attractors[i].transform.position = new Vector3(-100, -100, 100);
+
             }
         }
 
@@ -55,6 +76,25 @@ public class Targets : MonoBehaviour {
         }
     }
 
+    void Update()
+    {
+        GetSpectrumAudioSource();
+        foreach (GameObject a in attractors)
+        {
+            float s = scale(0.0f,0.01f,1.5f,3.0f,runningAvgFreq);
+            a.transform.localScale = new Vector3(s, s, s);
+        }
+    }
+
+    float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
+    {
+
+        float OldRange = (OldMax - OldMin);
+        float NewRange = (NewMax - NewMin);
+        float NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin;
+
+        return (NewValue);
+    }
 
 
     void initAttractors()
@@ -62,7 +102,7 @@ public class Targets : MonoBehaviour {
         attractors = new List<GameObject>();
         for (int i = 0; i < currentAttractors; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(0.0f, 100.0f), 0.0f, Random.Range(0.0f,60.0f));
+            Vector3 pos = new Vector3(Random.Range(0.0f, 100.0f), Random.Range(-10.0f, 10.0f), Random.Range(0.0f,60.0f));
             Vector3 scale = new Vector3(2.0f, 2.0f, 2.0f);
             GameObject newAttractor = CreateTarget();
 

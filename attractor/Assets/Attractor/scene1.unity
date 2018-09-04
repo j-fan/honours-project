@@ -32304,6 +32304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   osc: {fileID: 780599241}
   targetObject: {fileID: 1156809590}
+  audioSource: {fileID: 1553320891}
 --- !u!4 &1280316906
 Transform:
   m_ObjectHideFlags: 0
@@ -52788,7 +52789,7 @@ ParticleSystem:
         m_RotationOrder: 4
     maxLights: 20
   TrailModule:
-    enabled: 0
+    enabled: 1
     mode: 0
     ratio: 1
     lifetime:
@@ -53532,7 +53533,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1795661427}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d43f6ec62e3bf742848b9f4130ea548, type: 3}
   m_Name: 
@@ -53543,7 +53544,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1795661427}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37f847f1e930bed4ba96e367c43eff31, type: 3}
   m_Name: 
