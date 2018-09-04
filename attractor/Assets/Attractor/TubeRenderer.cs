@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
@@ -34,7 +35,7 @@ public class TubeRenderer : MonoBehaviour
         }
     }
 
-    public TubeVertex[][] lines;
+    public List<List<TubeVertex>> lines;
     public Material material;
 
     public int crossSegments = 3;
@@ -51,12 +52,12 @@ public class TubeRenderer : MonoBehaviour
     void Reset()
     {
 
-        lines = new TubeVertex[1][];
-        lines[0] = new TubeVertex[]
+        lines = new List<List<TubeVertex>>();
+        lines.Add(new List<TubeVertex>
         {
             new TubeVertex(Vector3.zero, 1.0f,Color.white),
             new TubeVertex(new Vector3(1,0,0), 1.0f,Color.white),
-        };
+        });
     }
     void Start()
     {
@@ -67,16 +68,16 @@ public class TubeRenderer : MonoBehaviour
     void LateUpdate()
     {
 
-        for (int l = 0; l < lines.Length; l++)
+        for (int l = 0; l < lines.Count; l++)
         {
-            TubeVertex[] vertices = lines[l];
+            List<TubeVertex> vertices = lines[l];
 
             if(vertices == null)
             {
                 continue;
             }
 
-            if (vertices.Length <= 1)
+            if (vertices.Count <= 1)
             {
                 GetComponent<Renderer>().enabled = false;
                 return;
@@ -86,12 +87,12 @@ public class TubeRenderer : MonoBehaviour
             //rebuild the mesh?
             bool re = false;
             float distFromMainCam;
-            if (vertices.Length > 1)
+            if (vertices.Count > 1)
             {
                 Vector3 cur1 = Camera.main.WorldToScreenPoint(vertices[0].point);
                 distFromMainCam = lastCameraPosition1.z;
                 lastCameraPosition1.z = 0;
-                Vector3 cur2 = Camera.main.WorldToScreenPoint(vertices[vertices.Length - 1].point);
+                Vector3 cur2 = Camera.main.WorldToScreenPoint(vertices[vertices.Count - 1].point);
                 lastCameraPosition2.z = 0;
 
                 float distance = (lastCameraPosition1 - cur1).magnitude;
@@ -120,23 +121,23 @@ public class TubeRenderer : MonoBehaviour
                     lastCrossSegments = crossSegments;
                 }
 
-                Vector3[] meshVertices = new Vector3[vertices.Length * crossSegments];
-                Vector2[] uvs = new Vector2[vertices.Length * crossSegments];
-                Color[] colors = new Color[vertices.Length * crossSegments];
-                int[] tris = new int[vertices.Length * crossSegments * 6];
+                Vector3[] meshVertices = new Vector3[vertices.Count * crossSegments];
+                Vector2[] uvs = new Vector2[vertices.Count * crossSegments];
+                Color[] colors = new Color[vertices.Count * crossSegments];
+                int[] tris = new int[vertices.Count * crossSegments * 6];
                 int[] lastVertices = new int[crossSegments];
                 int[] theseVertices = new int[crossSegments];
                 Quaternion rotation = Quaternion.identity;
 
-                for (int p = 0; p < vertices.Length; p++)
+                for (int p = 0; p < vertices.Count; p++)
                 {
-                    if (p < vertices.Length - 1) rotation = Quaternion.FromToRotation(Vector3.forward, vertices[p + 1].point - vertices[p].point);
+                    if (p < vertices.Count - 1) rotation = Quaternion.FromToRotation(Vector3.forward, vertices[p + 1].point - vertices[p].point);
 
                     for (int c = 0; c < crossSegments; c++)
                     {
                         int vertexIndex = p * crossSegments + c;
                         meshVertices[vertexIndex] = vertices[p].point + rotation * crossPoints[c] * vertices[p].radius;
-                        uvs[vertexIndex] = new Vector2((0.0f + c) / crossSegments, (0.0f + p) / vertices.Length);
+                        uvs[vertexIndex] = new Vector2((0.0f + c) / crossSegments, (0.0f + p) / vertices.Count);
                         colors[vertexIndex] = vertices[p].color;
 
                         //				print(c+" - vertex index "+(p*crossSegments+c) + " is " + meshVertices[p*crossSegments+c]);

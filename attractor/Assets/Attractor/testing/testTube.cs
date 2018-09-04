@@ -17,14 +17,22 @@ public class testTube : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        TubeRenderer.TubeVertex[][] tubes = new TubeRenderer.TubeVertex[3][];
-        tubes[0] = new TubeRenderer.TubeVertex[]{ new TubeRenderer.TubeVertex (new Vector3(0,0,0),3,Color.white),
-                                                  new TubeRenderer.TubeVertex (new Vector3(0,40,0),3,Color.white)};
-
-        tubes[1] = new TubeRenderer.TubeVertex[]{ new TubeRenderer.TubeVertex (new Vector3(0,0,0),3,Color.white),
-                                                  new TubeRenderer.TubeVertex (new Vector3(0,0,40),3,Color.white)};
-        tubes[2] = new TubeRenderer.TubeVertex[]{ new TubeRenderer.TubeVertex (new Vector3(0,0,0),3,Color.white),
-                                                  new TubeRenderer.TubeVertex (new Vector3(20,20,0),3,Color.white)};
+        List<List<TubeRenderer.TubeVertex>> tubes = new List<List<TubeRenderer.TubeVertex>>();
+        tubes.Add(new List<TubeRenderer.TubeVertex>
+        {
+            new TubeRenderer.TubeVertex (new Vector3(0,0,0),3,Color.white),
+            new TubeRenderer.TubeVertex (new Vector3(0,40,0),3,Color.white)
+        });
+        tubes.Add(new List<TubeRenderer.TubeVertex>
+        {
+            new TubeRenderer.TubeVertex (new Vector3(0,0,0),3,Color.white),
+            new TubeRenderer.TubeVertex (new Vector3(0,0,40),3,Color.white)
+        });
+        tubes.Add(new List<TubeRenderer.TubeVertex>
+        {
+            new TubeRenderer.TubeVertex (new Vector3(0,0,0),3,Color.white),
+            new TubeRenderer.TubeVertex (new Vector3(20,20,0),3,Color.white)
+        });
         tr.lines = tubes;
     }
 }
