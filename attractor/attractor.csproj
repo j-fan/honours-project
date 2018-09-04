@@ -291,6 +291,7 @@
     <Compile Include="Assets\Attractor\Targets.cs" />
     <Compile Include="Assets\Attractor\testing\testTube.cs" />
     <Compile Include="Assets\Attractor\TubeRenderer.cs" />
+    <Compile Include="Assets\Attractor\TubeTrails.cs" />
     <Compile Include="Assets\Extra\Scripts\Instantiator.cs" />
     <Compile Include="Assets\Extra\Scripts\ReceiveAll.cs" />
     <Compile Include="Assets\Extra\Scripts\ReceiveFFT.cs" />

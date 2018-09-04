@@ -54,8 +54,8 @@ public class TubeRenderer : MonoBehaviour
         lines = new TubeVertex[1][];
         lines[0] = new TubeVertex[]
         {
-            new TubeVertex(Vector3.zero, 1.0f, Color.white),
-            new TubeVertex(new Vector3(1,0,0), 1.0f, Color.white),
+            new TubeVertex(Vector3.zero, 1.0f,Color.white),
+            new TubeVertex(new Vector3(1,0,0), 1.0f,Color.white),
         };
     }
     void Start()
@@ -71,8 +71,12 @@ public class TubeRenderer : MonoBehaviour
         {
             TubeVertex[] vertices = lines[l];
 
-            if (null == vertices ||
-                vertices.Length <= 1)
+            if(vertices == null)
+            {
+                continue;
+            }
+
+            if (vertices.Length <= 1)
             {
                 GetComponent<Renderer>().enabled = false;
                 return;
