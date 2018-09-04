@@ -7432,7 +7432,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1747652146
+  randomSeed: -139339876
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -36044,7 +36044,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1030513555
+  randomSeed: 2104860414
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -50178,7 +50178,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2129442229
+  randomSeed: 1696315385
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -53548,8 +53548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f847f1e930bed4ba96e367c43eff31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 76b65d99e117d8d418e01cf9d7c20d19, type: 2}
-  crossSegments: 3
+  material: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  crossSegments: 5
   flatAtDistance: -1
   movePixelsForRebuild: 20
   maxRebuildTime: 0.5
