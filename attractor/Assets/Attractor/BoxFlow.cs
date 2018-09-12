@@ -27,7 +27,7 @@ public class BoxFlow : MonoBehaviour
     
 
     GameObject[][] grid;
-    Vector3 centre;
+    Vector3 centre; // parent empty location
     float objX = 1.0f;
     float objZ = 1.0f;
 
@@ -56,10 +56,9 @@ public class BoxFlow : MonoBehaviour
                 Vector3 s = grid[x][z].transform.localScale;
                 if (scaleEnabled)
                 {     
-                    float noiseHeight = Mathf.PerlinNoise(x * z * noiseScale, Time.time);
-                    //float height = (asamples[(z * gridX + x) % numSamples] * 100 + 0.1f) * animScale;
+                    float noiseHeight = Mathf.PerlinNoise(x * noiseScale * Time.time, z * noiseScale * Time.time);
                     float heightScale = runningAvgFreq * 2000 * animScale;
-                    grid[x][z].transform.localScale = new Vector3(s.x, heightScale*noiseHeight, s.z);
+                    grid[x][z].transform.localScale = new Vector3(s.x, Mathf.Abs(heightScale*noiseHeight), s.z);
                 }
                 if (rotateEnabled)
                 {
@@ -126,7 +125,7 @@ public class BoxFlow : MonoBehaviour
                 }
                 newObj.GetComponent<Renderer>().material = material;
                 float hue = ((float)z + ((float)x * gridZ)) / (gridX*gridZ);
-                newObj.GetComponent<Renderer>().material.color = Color.HSVToRGB(hue,1.0f,1.0f);
+                newObj.GetComponent<Renderer>().material.color = Color.HSVToRGB(hue,1.0f,0.3f);
                 newObj.transform.position = new Vector3(x*objX + centre.x, centre.y, z*objZ+centre.z);
                 newObj.transform.localScale = newObj.transform.localScale * objScale;
                 if (rotateEnabled && !scaleEnabled)

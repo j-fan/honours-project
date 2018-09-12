@@ -19,7 +19,7 @@ public class TubeTrails : MonoBehaviour {
         ps = GetComponent<ParticleSystem>();
         tubes = new List<List<TubeRenderer.TubeVertex>>();
         tr.lines = tubes;
-        for(int i = 0; i < ps.maxParticles; i++) { }
+        for(int i = 0; i < ps.main.maxParticles; i++) { }
     }
 	
 	// Update is called once per frame

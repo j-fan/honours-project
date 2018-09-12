@@ -125,7 +125,7 @@ public class ParticleFlow : MonoBehaviour {
                 float scale = runningAvgFreq * 100 + 0.75f;
                 Color original = particleColourGradient.Evaluate((float)i / particles.Length);
                 Color lerpedColor = Color.Lerp(new Color(0, 0, 0), original, scale);
-                p.color = lerpedColor;
+                p.startColor = lerpedColor;
             }
             else
             {
@@ -192,7 +192,7 @@ public class ParticleFlow : MonoBehaviour {
         float factor = 1 / (1 + (distanceX * distanceX + distanceZ * distanceZ)/ vortexScale);
 
         float vx = distanceX  * vortexSpeed * factor;
-        float vy = distanceY * vortexSpeed * factor;
+        //float vy = distanceY * vortexSpeed * factor;
         float vz = distanceZ * vortexSpeed * factor;
 
         Vector3 totalForce = Quaternion.AngleAxis(90, Vector3.up) * new Vector3(vx, 0, vz) * forceMultiplier + (direction);

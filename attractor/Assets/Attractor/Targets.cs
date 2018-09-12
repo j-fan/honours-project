@@ -8,8 +8,9 @@ public class Targets : MonoBehaviour {
     int numTargets = 0; //targets refer to targets detected by orbbec/opencv
     int currentAttractors = 15;
     List<GameObject> attractors;
-    float alpha = 0.5f; //lowpass filter positions for smooth movement, lower number for more smoothing
+    float alpha = 0.3f; //lowpass filter positions for smooth movement, lower number for more smoothing
     public GameObject targetObject;
+    Vector3 hiddenTargetLoc = new Vector3(-100, -100, 100);
 
     public AudioSource audioSource;
     float[] asamples = new float[128];
@@ -45,6 +46,7 @@ public class Targets : MonoBehaviour {
 
     void moveTargets(OscMessage message)
     {
+
         //relay this message to maxMSP
         osc.Send(message);
 
@@ -59,7 +61,7 @@ public class Targets : MonoBehaviour {
             for (int i = numTargets; i < attractors.Count; i++)
             {
                 //hide offscreen
-                attractors[i].transform.position = new Vector3(-100, -100, 100);
+                attractors[i].transform.position = hiddenTargetLoc;
 
             }
         }
@@ -71,8 +73,16 @@ public class Targets : MonoBehaviour {
             //if(i==0) print(x + " " + y);
             Vector3 newPos = new Vector3(x, 5.0f, y);
             Vector3 oldPos = attractors[i].transform.position;
+
             //dampen for smooth movement
-            attractors[i].transform.position = newPos * alpha + (oldPos * (1.0f - alpha));
+            if ((oldPos- hiddenTargetLoc).sqrMagnitude < 0.1f)
+            {
+                attractors[i].transform.position = newPos;
+            } else
+            {
+                attractors[i].transform.position = newPos * alpha + (oldPos * (1.0f - alpha));
+            }
+                
         }
     }
 
