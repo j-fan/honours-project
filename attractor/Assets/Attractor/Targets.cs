@@ -69,7 +69,7 @@ public class Targets : MonoBehaviour {
             float x = message.GetFloat(i * 2) / 3f;
             float y = message.GetFloat(i * 2 + 1) / 3f;
             //if(i==0) print(x + " " + y);
-            Vector3 newPos = new Vector3(x, 0, y);
+            Vector3 newPos = new Vector3(x, 5.0f, y);
             Vector3 oldPos = attractors[i].transform.position;
             //dampen for smooth movement
             attractors[i].transform.position = newPos * alpha + (oldPos * (1.0f - alpha));
@@ -102,7 +102,7 @@ public class Targets : MonoBehaviour {
         attractors = new List<GameObject>();
         for (int i = 0; i < currentAttractors; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(0.0f, 100.0f), Random.Range(-10.0f, 10.0f), Random.Range(0.0f,60.0f));
+            Vector3 pos = new Vector3(Random.Range(0.0f, 100.0f), 5.0f, Random.Range(0.0f,60.0f));
             Vector3 scale = new Vector3(2.0f, 2.0f, 2.0f);
             GameObject newAttractor = CreateTarget();
 

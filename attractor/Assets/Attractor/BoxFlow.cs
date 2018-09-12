@@ -15,7 +15,8 @@ public class BoxFlow : MonoBehaviour
     public float objScale = 1.0f;
     public bool rotateEnabled = true;
     public bool scaleEnabled = true;
-    public float noiseScale = 0.07f; 
+    public float noiseScale = 0.07f;
+    public float targetRadius = 10.0f;
 
     public AudioSource audioSource;
     float[] asamples;
@@ -29,6 +30,7 @@ public class BoxFlow : MonoBehaviour
     Vector3 centre;
     float objX = 1.0f;
     float objZ = 1.0f;
+
 
     // Use this for initialization
     void Start()
@@ -46,21 +48,17 @@ public class BoxFlow : MonoBehaviour
     void LateUpdate()
     {
         GetSpectrumAudioSource();
-        // foreach(GameObject a in targets.getTargets())
-        //{
-        //print(a.transform.position);
-        //}
         for (int x = 0; x < gridX; x++)
         {
             for (int z = 0; z < gridZ; z++)
             {
+
                 Vector3 s = grid[x][z].transform.localScale;
-                
                 if (scaleEnabled)
-                {
+                {     
                     float noiseHeight = Mathf.PerlinNoise(x * z * noiseScale, Time.time);
                     //float height = (asamples[(z * gridX + x) % numSamples] * 100 + 0.1f) * animScale;
-                    float heightScale = runningAvgFreq * 4000 * animScale;
+                    float heightScale = runningAvgFreq * 2000 * animScale;
                     grid[x][z].transform.localScale = new Vector3(s.x, heightScale*noiseHeight, s.z);
                 }
                 if (rotateEnabled)
@@ -70,7 +68,21 @@ public class BoxFlow : MonoBehaviour
                     float noiseDirectionZ = Mathf.PerlinNoise(z * noiseScale, Time.time);
                     grid[x][z].transform.Rotate(new Vector3(noiseDirectionX, 0, noiseDirectionZ), rotate);
                 }
-                
+                foreach (GameObject a in targets.getTargets())
+                {
+                    float distance = Vector3.Distance(a.transform.position, grid[x][z].transform.position);
+                    if(distance < targetRadius)
+                    {
+                        float distanceRatio = distance / targetRadius;
+                        //Vector3 oldScale = grid[x][z].transform.localScale;
+                        Quaternion oldRotation = grid[x][z].transform.rotation;
+                        if (scaleEnabled)
+                            grid[x][z].transform.localScale = Vector3.Lerp(new Vector3(s.x, 10, s.z), new Vector3(s.x, 1, s.z), distanceRatio*distanceRatio);
+                        if (rotateEnabled)
+                            grid[x][z].transform.rotation = Quaternion.Lerp(Quaternion.identity, oldRotation, distanceRatio);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -114,7 +126,6 @@ public class BoxFlow : MonoBehaviour
                 }
                 newObj.GetComponent<Renderer>().material = material;
                 float hue = ((float)z + ((float)x * gridZ)) / (gridX*gridZ);
-                print(hue);
                 newObj.GetComponent<Renderer>().material.color = Color.HSVToRGB(hue,1.0f,1.0f);
                 newObj.transform.position = new Vector3(x*objX + centre.x, centre.y, z*objZ+centre.z);
                 newObj.transform.localScale = newObj.transform.localScale * objScale;
