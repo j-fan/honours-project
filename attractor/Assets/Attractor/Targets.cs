@@ -13,7 +13,7 @@ public class Targets : MonoBehaviour {
     Vector3 hiddenTargetLoc = new Vector3(-100, -100, 100);
 
     public AudioSource audioSource;
-    float[] asamples = new float[128];
+    float[] asamples = new float[64];
     float avgFreq = 0.0f;
     float runningAvgFreq = 0.0f;
     float audioAlpha = 0.1f;

@@ -285,6 +285,7 @@
   <ItemGroup>
     <Compile Include="Assets\Attractor\BoxFlow.cs" />
     <Compile Include="Assets\Attractor\CameraMovement.cs" />
+    <Compile Include="Assets\Attractor\GridFlow.cs" />
     <Compile Include="Assets\Attractor\MultiScreenOn.cs" />
     <Compile Include="Assets\Attractor\ParticleFlow.cs" />
     <Compile Include="Assets\Attractor\ParticlePlexus.cs" />

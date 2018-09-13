@@ -15,12 +15,19 @@ public class GridFlow : MonoBehaviour {
     public int xSize = 10;
     public int ySize = 20;
     public float cellSize = 10;
-
+    public float targetRadius = 10.0f;
+    public float noiseScale = 0.07f;
 
     Mesh mesh;
     Vector3[] vertices;
     int[] triangles;
     Vector3 gridOffset;
+
+    float[] asamples;
+    int numSamples = 64;
+    float avgFreq = 0.0f;
+    float runningAvgFreq = 0.0f;
+    float audioAlpha = 0.1f;
 
     // Use this for initialization
     void Awake () {
@@ -29,6 +36,7 @@ public class GridFlow : MonoBehaviour {
 	
     void Start()
     {
+        asamples = new float[numSamples];
         gridOffset = GetComponent<Transform>().position;
         gridOffset = gridOffset - new Vector3(cellSize * 0.5f, 0, cellSize * 0.5f);  //make cells centered
         updateMesh();
@@ -37,6 +45,35 @@ public class GridFlow : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        GetSpectrumAudioSource();
+
+        Vector3[] verts = mesh.vertices;
+        for (int i=0; i < verts.Length; i++)
+        {
+            Vector3 vert = verts[i];
+            //displaces vertices with noise
+            verts[i].y = Mathf.PerlinNoise(i * noiseScale, Time.time) * 10;
+            //augment the noise with sound
+            verts[i].y = verts[i].y * Mathf.Clamp(runningAvgFreq * 500,0.0f,4.0f);
+            //raise region around targets
+            foreach (GameObject a in targets.getTargets())
+            {
+                float distance = Vector3.Distance(a.transform.position, vert);
+                float height = 0.0f;
+                if (distance < targetRadius)
+                {
+                    height = targetRadius - distance + vert.y;
+                    verts[i] = new Vector3(vert.x, height, vert.z);
+                } 
+                height = verts[i].y - 0.2f;
+                if (height < 0.0f)
+                {
+                    height = 0.0f;
+                }
+                verts[i] = new Vector3(vert.x, height, vert.z);
+            }
+        }
+        mesh.vertices = verts;
 		
 	}
 
@@ -85,5 +122,17 @@ public class GridFlow : MonoBehaviour {
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+    }
+    void GetSpectrumAudioSource()
+    {
+        audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
+        avgFreq = 0.0f;
+        for (int i = 0; i < asamples.Length; i++)
+        {
+            avgFreq = avgFreq + asamples[i];
+        }
+        avgFreq = avgFreq * avgFreq;
+        avgFreq = avgFreq / asamples.Length;
+        runningAvgFreq = (avgFreq * audioAlpha) + ((1 - audioAlpha) * runningAvgFreq);
     }
 }
