@@ -29,6 +29,10 @@ public class Flowfield : MonoBehaviour {
 
     void calculateFlowfieldDirections()
     {
+        offset = new Vector3(offset.x + (offsetSpeed.x * Time.deltaTime),
+                             offset.y + (offsetSpeed.y * Time.deltaTime),
+                             offset.z + (offsetSpeed.z * Time.deltaTime));
+
         float xOff = 0f;
         for (int x = 0; x < gridSize.x; x++)
         {

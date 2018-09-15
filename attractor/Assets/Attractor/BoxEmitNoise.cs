@@ -6,6 +6,7 @@ public class BoxEmitNoise : MonoBehaviour {
     ParticleSystem ps;
     float noiseScale = 0.1f;
     float incr = 0.1f;
+    public float animSpeed = 20f;
 
     public Flowfield flowfield;
 
@@ -13,7 +14,6 @@ public class BoxEmitNoise : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ps = GetComponent<ParticleSystem>();
-        print(ps.main.simulationSpace);
     }
 	
 	// Update is called once per frame
@@ -23,6 +23,7 @@ public class BoxEmitNoise : MonoBehaviour {
 
         for (int i = 0; i < particles.Length; i++) {
             ParticleSystem.Particle p = particles[i];
+            // find global position
             Vector3 particleWorldPosition;
             if (ps.main.simulationSpace == ParticleSystemSimulationSpace.Local)
             {
@@ -37,6 +38,9 @@ public class BoxEmitNoise : MonoBehaviour {
                 particleWorldPosition = p.position;
             }
 
+
+            // apply noise field direction vectors
+
             if (particles[i].startLifetime - particles[i].remainingLifetime > 0.5f)
             {
                 Vector3Int particlePos = new Vector3Int(
@@ -46,10 +50,10 @@ public class BoxEmitNoise : MonoBehaviour {
                     );
                 Vector3 flowVector = flowfield.flowFieldDirections[particlePos.x, particlePos.y, particlePos.z] ;
                 //Quaternion targetRotation = Quaternion.LookRotation(flowVector.normalized);
-                particles[i].velocity = flowVector * 30;
-                //keep particles within bounds
-                //if(particles[i].position.x > flowfield.transform.position.x + (flowfield.gridSize*flowfield.cellSize))
+                particles[i].velocity = flowVector * animSpeed;
+        
             }
+
 
         }
 
