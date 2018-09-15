@@ -25,7 +25,7 @@ public class ParticleFlow : MonoBehaviour {
     ParticleSystem ps;
 
     public AudioSource audioSource;
-    float[] asamples = new float[128];
+    float[] asamples = new float[64];
     float avgFreq = 0.0f;
     float runningAvgFreq = 0.0f;
 

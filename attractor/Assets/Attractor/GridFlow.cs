@@ -29,7 +29,6 @@ public class GridFlow : MonoBehaviour {
     float runningAvgFreq = 0.0f;
     float audioAlpha = 0.1f;
 
-    // Use this for initialization
     void Awake () {
         mesh = GetComponent<MeshFilter>().mesh;
 	}
@@ -43,7 +42,7 @@ public class GridFlow : MonoBehaviour {
         makeGrid();
     }
 
-	// Update is called once per frame
+
 	void Update () {
         GetSpectrumAudioSource();
 
@@ -62,7 +61,7 @@ public class GridFlow : MonoBehaviour {
                 float height = 0.0f;
                 if (distance < targetRadius)
                 {
-                    height = targetRadius - distance + vert.y;
+                    height = (targetRadius - distance + vert.y) * 0.5f;
                     verts[i] = new Vector3(vert.x, height, vert.z);
                 } 
                 height = verts[i].y - 0.2f;

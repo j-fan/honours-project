@@ -20,7 +20,7 @@ public class BoxFlow : MonoBehaviour
 
     public AudioSource audioSource;
     float[] asamples;
-    int numSamples = 128;
+    int numSamples = 64;
     float avgFreq = 0.0f;
     float runningAvgFreq = 0.0f;
     float audioAlpha = 0.1f;
