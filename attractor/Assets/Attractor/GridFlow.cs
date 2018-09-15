@@ -100,7 +100,7 @@ public class GridFlow : MonoBehaviour {
         mesh.uv = uv;
         mesh.colors = colours;
 
-        int[] triangles = new int[xSize * ySize * 6];
+        triangles = new int[xSize * ySize * 6];
         for (int ti = 0, vi = 0, y = 0; y < ySize; y++, vi++)
         {
             for (int x = 0; x < xSize; x++, ti += 6, vi++)

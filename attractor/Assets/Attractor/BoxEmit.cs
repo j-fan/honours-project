@@ -21,6 +21,7 @@ public class BoxEmit : MonoBehaviour {
             createParticleSystems();
             init = true;
         }
+
     }
 
     void createParticleSystems()
@@ -30,7 +31,6 @@ public class BoxEmit : MonoBehaviour {
         {
             GameObject newParticleSys = Instantiate(particleSystemObject) as GameObject;
             newParticleSys.transform.position = a.transform.position;
-
 
         }
     }
