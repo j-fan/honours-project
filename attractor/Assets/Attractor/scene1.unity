@@ -7432,7 +7432,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 874503572
+  randomSeed: -1392646861
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10923,7 +10923,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1122969367
+  randomSeed: 93149780
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14477,7 +14477,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14518,7 +14518,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -17778,7 +17778,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 339031578}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -20, y: 10, z: 0}
+  m_LocalPosition: {x: 35, y: 10, z: 18.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -17795,6 +17795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0f46bb03c171d4dbc8bef7a7a5db2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flowfield: {fileID: 358530507}
 --- !u!1 &358530506
 GameObject:
   m_ObjectHideFlags: 0
@@ -17822,11 +17823,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5606cf77caf27498f3c4ad8c4dcab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 45, y: 3, z: 30}
-  increment: 3
+  gridSize: {x: 120, y: 3, z: 80}
+  increment: 7
   offset: {x: 0, y: 0, z: 0}
   offsetSpeed: {x: 0, y: 0, z: 0}
-  cellSize: 5
+  cellSize: 2
 --- !u!4 &358530508
 Transform:
   m_ObjectHideFlags: 0
@@ -17834,7 +17835,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 358530506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.434446, y: 10.000008, z: -10.007808}
+  m_LocalPosition: {x: 56, y: 0, z: 38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18038,7 +18039,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 993956774
+  randomSeed: 1874202789
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -25047,7 +25048,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -520877340
+  randomSeed: -616959328
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -35828,7 +35829,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1609194814
+  randomSeed: -1228117225
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -39442,7 +39443,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 761101926
+  randomSeed: 102794384
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -53629,7 +53630,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 799082583
+  randomSeed: -485522976
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -57160,7 +57161,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -91762508
+  randomSeed: 1943037063
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -60662,7 +60663,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -635401910
+  randomSeed: -1405322595
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -64200,7 +64201,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1905391626}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11a75d1aa5e444f46b5daff2ac89266e, type: 3}
   m_Name: 
