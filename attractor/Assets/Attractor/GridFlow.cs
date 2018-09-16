@@ -23,11 +23,7 @@ public class GridFlow : MonoBehaviour {
     int[] triangles;
     Vector3 gridOffset;
 
-    float[] asamples;
-    int numSamples = 64;
-    float avgFreq = 0.0f;
-    float runningAvgFreq = 0.0f;
-    float audioAlpha = 0.1f;
+    public BeatsFFT beatsFFT;
 
     void Awake () {
         mesh = GetComponent<MeshFilter>().mesh;
@@ -35,7 +31,6 @@ public class GridFlow : MonoBehaviour {
 	
     void Start()
     {
-        asamples = new float[numSamples];
         gridOffset = GetComponent<Transform>().position;
         gridOffset = gridOffset - new Vector3(cellSize * 0.5f, 0, cellSize * 0.5f);  //make cells centered
         updateMesh();
@@ -44,7 +39,6 @@ public class GridFlow : MonoBehaviour {
 
 
 	void Update () {
-        GetSpectrumAudioSource();
 
         Vector3[] verts = mesh.vertices;
         for (int i=0; i < verts.Length; i++)
@@ -53,7 +47,7 @@ public class GridFlow : MonoBehaviour {
             //displaces vertices with noise
             verts[i].y = Mathf.PerlinNoise(i * noiseScale, Time.time) * 10;
             //augment the noise with sound
-            verts[i].y = verts[i].y * Mathf.Clamp(runningAvgFreq * 500,0.0f,4.0f);
+            verts[i].y = verts[i].y * Mathf.Clamp(beatsFFT.runningAvgFreq * 500,0.0f,4.0f);
             //raise region around targets
             foreach (GameObject a in targets.getTargets())
             {
@@ -122,16 +116,5 @@ public class GridFlow : MonoBehaviour {
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
     }
-    void GetSpectrumAudioSource()
-    {
-        audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
-        avgFreq = 0.0f;
-        for (int i = 0; i < asamples.Length; i++)
-        {
-            avgFreq = avgFreq + asamples[i];
-        }
-        avgFreq = avgFreq * avgFreq;
-        avgFreq = avgFreq / asamples.Length;
-        runningAvgFreq = (avgFreq * audioAlpha) + ((1 - audioAlpha) * runningAvgFreq);
-    }
+
 }

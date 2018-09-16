@@ -18,13 +18,7 @@ public class BoxFlow : MonoBehaviour
     public float noiseScale = 0.07f;
     public float targetRadius = 10.0f;
 
-    public AudioSource audioSource;
-    float[] asamples;
-    int numSamples = 64;
-    float avgFreq = 0.0f;
-    float runningAvgFreq = 0.0f;
-    float audioAlpha = 0.1f;
-    
+    public BeatsFFT beatsFFT;
 
     GameObject[][] grid;
     Vector3 centre; // parent empty location
@@ -37,7 +31,6 @@ public class BoxFlow : MonoBehaviour
     {
         centre = GetComponent<Transform>().position;
         grid = new GameObject[gridX][];
-        asamples = new float[numSamples];
         objX *= objScale;
         objZ *= objScale;
         initGrid();
@@ -47,7 +40,6 @@ public class BoxFlow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        GetSpectrumAudioSource();
         for (int x = 0; x < gridX; x++)
         {
             for (int z = 0; z < gridZ; z++)
@@ -57,12 +49,12 @@ public class BoxFlow : MonoBehaviour
                 if (scaleEnabled)
                 {     
                     float noiseHeight = Mathf.PerlinNoise(x * noiseScale * Time.time, z * noiseScale * Time.time);
-                    float heightScale = runningAvgFreq * 2000 * animScale;
+                    float heightScale = beatsFFT.runningAvgFreq * 2000 * animScale;
                     grid[x][z].transform.localScale = new Vector3(s.x, Mathf.Abs(heightScale*noiseHeight), s.z);
                 }
                 if (rotateEnabled)
                 {
-                    float rotate = runningAvgFreq * 360 * animScale;
+                    float rotate = beatsFFT.runningAvgFreq * 360 * animScale;
                     float noiseDirectionX = Mathf.PerlinNoise(x * noiseScale, Time.time);
                     float noiseDirectionZ = Mathf.PerlinNoise(z * noiseScale, Time.time);
                     grid[x][z].transform.Rotate(new Vector3(noiseDirectionX, 0, noiseDirectionZ), rotate);
@@ -86,18 +78,6 @@ public class BoxFlow : MonoBehaviour
         }
     }
 
-    void GetSpectrumAudioSource()
-    {
-        audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
-        avgFreq = 0.0f;
-        for (int i = 0; i < asamples.Length; i++)
-        {
-            avgFreq = avgFreq + asamples[i];
-        }
-        avgFreq = avgFreq * avgFreq;
-        avgFreq = avgFreq / asamples.Length;
-        runningAvgFreq = (avgFreq * audioAlpha) + ((1 - audioAlpha) * runningAvgFreq);
-    }
     void initGrid()
     {
         GameObject newObj;

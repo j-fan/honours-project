@@ -12,11 +12,7 @@ public class Targets : MonoBehaviour {
     public GameObject targetObject;
     Vector3 hiddenTargetLoc = new Vector3(-100, -100, 100);
 
-    public AudioSource audioSource;
-    float[] asamples = new float[64];
-    float avgFreq = 0.0f;
-    float runningAvgFreq = 0.0f;
-    float audioAlpha = 0.1f;
+    public BeatsFFT beatsFFT;
 
     void Start () {
         initAttractors();
@@ -24,20 +20,7 @@ public class Targets : MonoBehaviour {
         osc.SetAddressHandler("/points", moveTargets);
     }
 
-    void GetSpectrumAudioSource()
-    {
-        audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
 
-        avgFreq = 0.0f;
-        for (int i = 0; i < asamples.Length; i++)
-        {
-            avgFreq = avgFreq + asamples[i];
-        }
-        avgFreq = avgFreq * avgFreq;
-        avgFreq = avgFreq / asamples.Length;
-        runningAvgFreq = (avgFreq * audioAlpha) + ((1 - audioAlpha) * runningAvgFreq);
-
-    }
     void setNumTargets(OscMessage message)
     {
         numTargets = message.GetInt(0);
@@ -88,10 +71,9 @@ public class Targets : MonoBehaviour {
 
     void Update()
     {
-        GetSpectrumAudioSource();
         foreach (GameObject a in attractors)
         {
-            float s = scale(0.0f,0.01f,1.5f,3.0f,runningAvgFreq);
+            float s = scale(0.0f,0.01f,1.5f,3.0f,beatsFFT.runningAvgFreq);
             a.transform.localScale = new Vector3(s, s, s);
         }
     }

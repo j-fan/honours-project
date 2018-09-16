@@ -24,10 +24,9 @@ public class ParticleFlow : MonoBehaviour {
 
     ParticleSystem ps;
 
-    public AudioSource audioSource;
-    float[] asamples = new float[64];
-    float avgFreq = 0.0f;
-    float runningAvgFreq = 0.0f;
+
+    public BeatsFFT beatsFFT;
+
 
     // Use this for initialization
     void Start()
@@ -43,23 +42,10 @@ public class ParticleFlow : MonoBehaviour {
         // add variation to particle colour
         ParticleSystem.MainModule main = GetComponent<ParticleSystem>().main;
         main.startColor = particleColourGradient.Evaluate(Random.Range(0f, 1f));
-        GetSpectrumAudioSource();
-    }
-
-    void GetSpectrumAudioSource()
-    {
-        audioSource.GetSpectrumData(asamples, 0, FFTWindow.Blackman);
-
-        avgFreq = 0.0f;
-        for(int i = 0; i < asamples.Length; i++)
-        {
-            avgFreq = avgFreq + asamples[i];
-        }
-        avgFreq = avgFreq * avgFreq;
-        avgFreq = avgFreq / asamples.Length;
-        runningAvgFreq = (avgFreq * alpha) + ((1 - alpha) * runningAvgFreq);
 
     }
+
+
 
     void LateUpdate()
     {
@@ -112,17 +98,17 @@ public class ParticleFlow : MonoBehaviour {
             {
                 if(targets.getCurrentAttractors() == 0)
                 {
-                    p.velocity = new Vector3(0, 1, 0) * avgFreq * 100;
+                    p.velocity = new Vector3(0, 1, 0) * beatsFFT.avgFreq * 100;
                 } else
                 {
-                    p.velocity = totalForce * avgFreq * 100;
+                    p.velocity = totalForce * beatsFFT.avgFreq * 100;
                 }
                 
             }
             else if (simType == GRAVITY)
             {
                 p.velocity += totalForce;   //with  acceleration
-                float scale = runningAvgFreq * 100 + 0.75f;
+                float scale = beatsFFT.runningAvgFreq * 100 + 0.75f;
                 Color original = particleColourGradient.Evaluate((float)i / particles.Length);
                 Color lerpedColor = Color.Lerp(new Color(0, 0, 0), original, scale);
                 p.startColor = lerpedColor;
@@ -130,7 +116,7 @@ public class ParticleFlow : MonoBehaviour {
             else
             {
                 p.velocity = totalForce;    //velocity only to visualise field line style
-                p.velocity = p.velocity * avgFreq * 100;
+                p.velocity = p.velocity * beatsFFT.avgFreq * 100;
             }
 
            

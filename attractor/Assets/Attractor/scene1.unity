@@ -3669,7 +3669,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &28315819
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -7164,7 +7164,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &106631948
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -7315,7 +7315,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 0.5
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &124882412
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -7432,7 +7432,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 604673666
+  randomSeed: 981757411
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10923,7 +10923,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1846700362
+  randomSeed: 226109118
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14268,7 +14268,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &296501007
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -14477,7 +14477,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14920,7 +14920,7 @@ ParticleSystem:
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: 0, y: 180, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -15238,10 +15238,10 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -15282,7 +15282,7 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -15323,8 +15323,8 @@ ParticleSystem:
         m_RotationOrder: 4
     curve:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.7853982
+      minMaxState: 3
+      scalar: 1.5707963
       minScalar: 0.7853982
       maxCurve:
         serializedVersion: 2
@@ -17778,7 +17778,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 339031578}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 35, y: 10, z: 18.2}
+  m_LocalPosition: {x: -89.3, y: 10, z: 18.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -17795,8 +17795,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0f46bb03c171d4dbc8bef7a7a5db2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animSpeed: 20
+  animSpeed: 3000
   flowfield: {fileID: 358530507}
+  beatsFFT: {fileID: 1359321854}
 --- !u!1 &358530506
 GameObject:
   m_ObjectHideFlags: 0
@@ -17923,7 +17924,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 0.5
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &452930690
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -18040,7 +18041,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1874202789
+  randomSeed: 1051869731
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -24781,7 +24782,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &567983835
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -24932,7 +24933,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 0.5
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &779335728
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -25049,7 +25050,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2100095121
+  randomSeed: -1559365227
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -28523,7 +28524,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &810598453
 GameObject:
@@ -32049,7 +32050,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 10
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &830631248
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -35562,7 +35563,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 3
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &891186113
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -35713,7 +35714,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 0.5
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &928395824
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -35830,7 +35831,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 552820013
+  randomSeed: 858000091
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -39178,7 +39179,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a7e3b6dcd0f982e42bf6e746c2847eed, type: 2}
+  - {fileID: 2100000, guid: 921430e1ae320bf439f3318afb60d161, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -39228,7 +39229,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1237647042
 GameObject:
@@ -39327,7 +39328,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &1237647046
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -39444,7 +39445,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1233673170
+  randomSeed: 799326625
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -42789,7 +42790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   osc: {fileID: 780599241}
   targetObject: {fileID: 1156809590}
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!4 &1280316906
 Transform:
   m_ObjectHideFlags: 0
@@ -42801,7 +42802,50 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1359321853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1359321855}
+  - component: {fileID: 1359321854}
+  m_Layer: 0
+  m_Name: BeatsFFT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1359321854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1359321853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3ba177e1f2a124e90cf5e3db7eaedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 1553320891}
+  avgFreq: 0
+  runningAvgFreq: 0
+--- !u!4 &1359321855
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1359321853}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -73.98438, y: 2.4476166, z: 30.893707}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1451594139
 GameObject:
@@ -46246,7 +46290,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 5
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &1451594144
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -46398,7 +46442,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 700
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!114 &1485981765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46530,7 +46574,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -53674419
+  randomSeed: 51731331
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -53271,7 +53315,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &1500255576
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -53371,7 +53415,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 1
+  Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -53514,7 +53558,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 3
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &1584898447
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -53631,7 +53675,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -612555302
+  randomSeed: 400718348
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -57028,7 +57072,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 0.5
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!95 &1659736320
 Animator:
   serializedVersion: 3
@@ -57162,7 +57206,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1943037063
+  randomSeed: -1747789287
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -60547,7 +60591,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 15
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &1795661429
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -60664,7 +60708,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 16237464
+  randomSeed: -381013860
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -64123,7 +64167,7 @@ MonoBehaviour:
   scaleEnabled: 1
   noiseScale: 0.07
   targetRadius: 10
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!4 &1905391628
 Transform:
   m_ObjectHideFlags: 0
@@ -64155,6 +64199,7 @@ MonoBehaviour:
   cellSize: 2.2
   targetRadius: 12
   noiseScale: 0.07
+  beatsFFT: {fileID: 1359321854}
 --- !u!33 &1905391630
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -67652,7 +67697,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   forceMultiplier: 1
-  audioSource: {fileID: 1553320891}
+  beatsFFT: {fileID: 1359321854}
 --- !u!199 &2040180192
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -67836,5 +67881,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -9,6 +9,7 @@ public class BoxEmitNoise : MonoBehaviour {
     public float animSpeed = 20f;
 
     public Flowfield flowfield;
+    public BeatsFFT beatsFFT;
 
 
 	// Use this for initialization
@@ -50,7 +51,7 @@ public class BoxEmitNoise : MonoBehaviour {
                     );
                 Vector3 flowVector = flowfield.flowFieldDirections[particlePos.x, particlePos.y, particlePos.z] ;
                 //Quaternion targetRotation = Quaternion.LookRotation(flowVector.normalized);
-                particles[i].velocity = flowVector * animSpeed;
+                particles[i].velocity = flowVector * animSpeed * beatsFFT.runningAvgFreq;
         
             }
 
