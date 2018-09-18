@@ -21681,7 +21681,7 @@ GameObject:
   - component: {fileID: 1237647045}
   - component: {fileID: 1237647043}
   m_Layer: 0
-  m_Name: Particle 3
+  m_Name: Vortex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21880,7 +21880,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 652929319
+  randomSeed: 2007278765
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -28810,7 +28810,7 @@ GameObject:
   - component: {fileID: 1485981764}
   - component: {fileID: 1485981763}
   m_Layer: 0
-  m_Name: Particle 4
+  m_Name: Attractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29009,7 +29009,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1301523118
+  randomSeed: -1801881139
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -32448,7 +32448,7 @@ GameObject:
   - component: {fileID: 1584898446}
   - component: {fileID: 1584898450}
   m_Layer: 0
-  m_Name: Particle 1
+  m_Name: Gravity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35967,7 +35967,7 @@ GameObject:
   - component: {fileID: 1795661435}
   - component: {fileID: 1795661434}
   m_Layer: 0
-  m_Name: Particle 2
+  m_Name: Electric
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36134,7 +36134,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1733338385
+  randomSeed: 1208465242
   InitialModule:
     serializedVersion: 3
     enabled: 1
