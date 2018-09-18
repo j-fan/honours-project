@@ -6,6 +6,7 @@ public class BoxEmitNoise : MonoBehaviour {
     ParticleSystem ps;
     float noiseScale = 0.1f;
     float incr = 0.1f;
+    public float delay = 0.5f;
     public float animSpeed = 20f;
 
     public Flowfield flowfield;
@@ -42,7 +43,7 @@ public class BoxEmitNoise : MonoBehaviour {
 
             // apply noise field direction vectors
 
-            if (particles[i].startLifetime - particles[i].remainingLifetime > 0.5f)
+            if (particles[i].startLifetime - particles[i].remainingLifetime > delay)
             {
                 Vector3Int particlePos = new Vector3Int(
                     Mathf.FloorToInt(Mathf.Clamp((particleWorldPosition.x / flowfield.cellSize),0,flowfield.gridSize.x-1)),

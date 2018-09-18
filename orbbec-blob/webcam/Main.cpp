@@ -24,6 +24,11 @@ static void blobDetect(Mat& image);
 static void sendOSC(vector<Rect> boundRect, int rows, int cols);
 Targets targets;
 
+// clip the depth map to certain range to remove background
+uint16_t minDistance = 10;
+uint16_t maxDistance = 3000;//2000; //measured in mm
+int minArea = 0;
+
 
 /*
 * To work with Kinect or XtionPRO the user must install OpenNI library and PrimeSensorModule for OpenNI and
@@ -83,6 +88,17 @@ int main(int argc, char* argv[])
 		cout << "\nDevice doesn't contain depth generator or it is not selected." << endl;
 	}
 
+
+	//cout << "argc " << argc << "\n";
+	if (argc == 4) {
+		minDistance = strtol(argv[1], NULL, 0);
+		maxDistance = strtol(argv[2], NULL, 0);
+		minArea = strtol(argv[3], NULL, 0);
+	}
+	cout << "mininum distance: " << minDistance << "\n";;
+	cout << "maximum distance: " << maxDistance << "\n";
+	cout << "min area: " << minArea << "\n";
+
 	showFrames(capture);
 	return 0;
 }
@@ -101,7 +117,7 @@ static void sendOSC(int rows, int cols) {
 	// origin needs to be changed since opencv origin is top left,
 	// unity is bottom left
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = cols - (targets.getTarget(i).getCentre().x) ; //col - to flip for projection mode
+		float centreX = cols - (targets.getTarget(i).getCentre().x) ; //col - to flip for projection mode 8
 		float centreY = rows - (targets.getTarget(i).getCentre().y);
 		//if(i == 0) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
@@ -115,9 +131,6 @@ static void blobDetect(Mat& image) {
 
 	float scaleFactor = 0.5f; //0.1f; //for colormap
 
-	// clip the depth map to certain range to remove background
-	uint16_t minDistance = 10;
-	uint16_t maxDistance = 3000;//2000; //measured in mm
 	
 	for (int y = 0; y < image.rows; y++)
 	{
@@ -179,7 +192,7 @@ static void blobDetect(Mat& image) {
 		double area = boundRect.height * boundRect.width;
 
 		//remove small boxes
-		if (area > 0) { //1000 original
+		if (area > minArea) { //1000 original
 
 			float centreX = (boundRect.x + boundRect.width / 2) ;
 			float centreY = (boundRect.y + boundRect.height / 2) ;
