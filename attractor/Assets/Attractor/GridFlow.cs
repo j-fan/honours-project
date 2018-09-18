@@ -37,8 +37,18 @@ public class GridFlow : MonoBehaviour {
         makeGrid();
     }
 
+    private void OnDisable()
+    {
+        updateMesh();
+    }
 
-	void Update () {
+    private void OnEnable()
+    {
+        updateMesh();
+        makeGrid();
+    }
+
+    void Update () {
 
         Vector3[] verts = mesh.vertices;
         for (int i=0; i < verts.Length; i++)

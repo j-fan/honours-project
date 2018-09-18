@@ -36,6 +36,26 @@ public class BoxFlow : MonoBehaviour
         initGrid();
     }
 
+    private void OnDisable()
+    {
+        for (int x = 0; x < gridX; x++)
+        {
+            for (int z = 0; z < gridZ; z++)
+            {
+                Destroy(grid[x][z]);
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (grid == null)
+        {
+            return;
+        }
+        initGrid();
+    }
+
 
     // Update is called once per frame
     void LateUpdate()

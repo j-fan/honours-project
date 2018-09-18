@@ -283,9 +283,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Attractor\BeatsFFT.cs" />
     <Compile Include="Assets\Attractor\BoxEmit.cs" />
+    <Compile Include="Assets\Attractor\BoxEmitNoise.cs" />
     <Compile Include="Assets\Attractor\BoxFlow.cs" />
     <Compile Include="Assets\Attractor\CameraMovement.cs" />
+    <Compile Include="Assets\Attractor\FastNoise.cs" />
+    <Compile Include="Assets\Attractor\Flowfield.cs" />
     <Compile Include="Assets\Attractor\GridFlow.cs" />
     <Compile Include="Assets\Attractor\MultiScreenOn.cs" />
     <Compile Include="Assets\Attractor\ParticleFlow.cs" />
@@ -352,6 +356,7 @@
     <Compile Include="Assets\PostProcessing\Utilities\PostProcessingController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Attractor\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />
