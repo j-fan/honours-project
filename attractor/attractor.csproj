@@ -283,21 +283,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Attractor\BeatsFFT.cs" />
-    <Compile Include="Assets\Attractor\BoxEmit.cs" />
-    <Compile Include="Assets\Attractor\BoxEmitNoise.cs" />
-    <Compile Include="Assets\Attractor\BoxFlow.cs" />
-    <Compile Include="Assets\Attractor\CameraMovement.cs" />
-    <Compile Include="Assets\Attractor\FastNoise.cs" />
-    <Compile Include="Assets\Attractor\Flowfield.cs" />
-    <Compile Include="Assets\Attractor\GridFlow.cs" />
-    <Compile Include="Assets\Attractor\MultiScreenOn.cs" />
-    <Compile Include="Assets\Attractor\ParticleFlow.cs" />
-    <Compile Include="Assets\Attractor\ParticlePlexus.cs" />
-    <Compile Include="Assets\Attractor\Targets.cs" />
+    <Compile Include="Assets\Attractor\Scripts\BeatsFFT.cs" />
+    <Compile Include="Assets\Attractor\Scripts\BoxEmit.cs" />
+    <Compile Include="Assets\Attractor\Scripts\BoxEmitNoise.cs" />
+    <Compile Include="Assets\Attractor\Scripts\BoxFlow.cs" />
+    <Compile Include="Assets\Attractor\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\Attractor\Scripts\FastNoise.cs" />
+    <Compile Include="Assets\Attractor\Scripts\Flowfield.cs" />
+    <Compile Include="Assets\Attractor\Scripts\GridFlow.cs" />
+    <Compile Include="Assets\Attractor\Scripts\MultiScreenOn.cs" />
+    <Compile Include="Assets\Attractor\Scripts\ParticleFlow.cs" />
+    <Compile Include="Assets\Attractor\Scripts\ParticlePlexus.cs" />
+    <Compile Include="Assets\Attractor\Scripts\Targets.cs" />
+    <Compile Include="Assets\Attractor\Scripts\TubeRenderer.cs" />
+    <Compile Include="Assets\Attractor\Scripts\TubeTrails.cs" />
     <Compile Include="Assets\Attractor\testing\testTube.cs" />
-    <Compile Include="Assets\Attractor\TubeRenderer.cs" />
-    <Compile Include="Assets\Attractor\TubeTrails.cs" />
     <Compile Include="Assets\Extra\Scripts\Instantiator.cs" />
     <Compile Include="Assets\Extra\Scripts\ReceiveAll.cs" />
     <Compile Include="Assets\Extra\Scripts\ReceiveFFT.cs" />
