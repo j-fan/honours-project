@@ -1,6 +1,5 @@
 *.zip
 /UnityOSC-master
-/resources
 /attractor/Assets/Extra
 /attractor/Assets/OSCTest
 /attractor/Library

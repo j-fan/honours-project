@@ -1,0 +1,29 @@
+- make target balls animated (done)
+- add positive charges (done)
+- make air flow field - Potential flow around a circular cylinder
+- switch particles to emissive or unlit mat (not needed)
+
+- make grid boxes anim
+	- make mesh displacement grid (done)
+	- make cube emitter attach to targets (done)
+
+./webcam.exe 10 3000 1000
+
+keyframes 
+0:11 (build-up) grid flow
+0:22 add electric
+0:33 add bottom particles
+
+0:55 (calm) gravity
+
+1:19 (climax) box emit
+1:41
+
+2:03 (calm) vortex
+2:47 add bottom particles
+
+3:21 (calm tone change) box flow (rotate only)
+3:43 (merge into climax) (rotate & scale)
+
+4:28 (calm end) basic attractor
+
