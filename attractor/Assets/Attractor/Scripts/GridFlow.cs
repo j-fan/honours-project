@@ -17,6 +17,7 @@ public class GridFlow : MonoBehaviour {
     public float cellSize = 10;
     public float targetRadius = 10.0f;
     public float noiseScale = 0.07f;
+    public float brightness = 0.5f;
 
     Mesh mesh;
     Vector3[] vertices;
@@ -51,6 +52,8 @@ public class GridFlow : MonoBehaviour {
     void Update () {
 
         Vector3[] verts = mesh.vertices;
+        Color[] colours = new Color[vertices.Length];
+
         for (int i=0; i < verts.Length; i++)
         {
             Vector3 vert = verts[i];
@@ -74,9 +77,11 @@ public class GridFlow : MonoBehaviour {
                     height = 0.0f;
                 }
                 verts[i] = new Vector3(vert.x, height, vert.z);
+                colours[i] = Color.HSVToRGB((float)i / xSize / ySize, 1.0f, brightness);
             }
         }
         mesh.vertices = verts;
+        mesh.colors = colours;
 		
 	}
 
@@ -96,7 +101,7 @@ public class GridFlow : MonoBehaviour {
             {
                 vertices[i] = new Vector3(x*cellSize, 0, y*cellSize) + gridOffset;
                 uv[i] = new Vector2((float)x , (float)y );
-                colours[i] = Color.HSVToRGB((float)y/ySize, 1.0f,0.5f) ;
+                colours[i] = Color.HSVToRGB((float)y/ySize, 1.0f,brightness) ;
 
             }
         }

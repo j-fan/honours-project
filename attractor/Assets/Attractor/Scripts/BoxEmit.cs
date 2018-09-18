@@ -16,10 +16,9 @@ public class BoxEmit : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (!init) //targets not ready in start();
+        if (!init) 
         {
-            createParticleSystems();
-            init = true;
+            return;
         }
         List<GameObject> targs = targets.getTargets();
         if(targs.Count > boxEmitters.Count)
@@ -68,7 +67,12 @@ public class BoxEmit : MonoBehaviour {
 
     private void OnEnable()
     {
+        if (!init)
+        {
+            init = true;
+        }
         createParticleSystems();
+
     }
 
     void createParticleSystems()

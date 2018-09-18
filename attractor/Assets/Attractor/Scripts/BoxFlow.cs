@@ -66,12 +66,14 @@ public class BoxFlow : MonoBehaviour
             {
 
                 Vector3 s = grid[x][z].transform.localScale;
+                //animate scale
                 if (scaleEnabled)
                 {     
                     float noiseHeight = Mathf.PerlinNoise(x * noiseScale * Time.time, z * noiseScale * Time.time);
                     float heightScale = beatsFFT.runningAvgFreq * 2000 * animScale;
                     grid[x][z].transform.localScale = new Vector3(s.x, Mathf.Abs(heightScale*noiseHeight), s.z);
                 }
+                //animate rotation
                 if (rotateEnabled)
                 {
                     float rotate = beatsFFT.runningAvgFreq * 360 * animScale;
@@ -79,6 +81,7 @@ public class BoxFlow : MonoBehaviour
                     float noiseDirectionZ = Mathf.PerlinNoise(z * noiseScale, Time.time);
                     grid[x][z].transform.Rotate(new Vector3(noiseDirectionX, 0, noiseDirectionZ), rotate);
                 }
+                // flatten radius around targets
                 foreach (GameObject a in targets.getTargets())
                 {
                     float distance = Vector3.Distance(a.transform.position, grid[x][z].transform.position);
@@ -94,6 +97,9 @@ public class BoxFlow : MonoBehaviour
                         break;
                     }
                 }
+
+                //allow changes to box cell scale
+                grid[x][z].transform.localScale = new Vector3(objScale, grid[x][z].transform.localScale.y, objScale);
             }
         }
     }

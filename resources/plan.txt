@@ -7,23 +7,28 @@
 	- make mesh displacement grid (done)
 	- make cube emitter attach to targets (done)
 
+
+
 ./webcam.exe 10 3000 1000
 
+
+
 keyframes 
-0:11 (build-up) grid flow
-0:22 add electric
-0:33 add bottom particles
+0:11 	frame 330		(build-up) add electric
+0:22	frame 660	
+0:33 			add plexus
 
-0:55 (calm) gravity
+0:56 	frame 1680	(calm) gravity
 
-1:19 (climax) box emit
-1:41
+1:19 	frame 2370	(climax)box emit
+1:41	frame 3030
 
-2:03 (calm) vortex
-2:47 add bottom particles
+2:03	frame 3690	(calm) vortex
+2:47	frame 5010	add bottom particles
 
-3:21 (calm tone change) box flow (rotate only)
-3:43 (merge into climax) (rotate & scale)
+3:21 	frame 6030	(calm tone change) box flow (rotate only)
+3:43 	frame 6690	(merge into climax) (rotate & scale)
 
-4:28 (calm end) basic attractor
+4:28 	frame 8040	(calm end) basic attractor
 
+5:15 	frame 9450 	(end)
