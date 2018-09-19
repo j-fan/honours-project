@@ -33,6 +33,13 @@ public class BoxFlow : MonoBehaviour
         grid = new GameObject[gridX][];
         objX *= objScale;
         objZ *= objScale;
+        if (boxObj != null)
+        {
+            objX = boxObj.GetComponent<Renderer>().bounds.size.x * objScale;
+            objZ = boxObj.GetComponent<Renderer>().bounds.size.z * objScale;
+        }
+        objX += spacing;
+        objZ += spacing;
         initGrid();
     }
 
@@ -71,7 +78,8 @@ public class BoxFlow : MonoBehaviour
                 {     
                     float noiseHeight = Mathf.PerlinNoise(x * noiseScale * Time.time, z * noiseScale * Time.time);
                     float heightScale = beatsFFT.runningAvgFreq * 2000 * animScale;
-                    grid[x][z].transform.localScale = new Vector3(s.x, Mathf.Abs(heightScale*noiseHeight), s.z);
+                    float height = Mathf.Clamp(Mathf.Abs(heightScale * noiseHeight), 0, 20.0f);
+                    grid[x][z].transform.localScale = new Vector3(s.x, height, s.z);
                 }
                 //animate rotation
                 if (rotateEnabled)
@@ -108,16 +116,7 @@ public class BoxFlow : MonoBehaviour
     {
         GameObject newObj;
 
-        if(boxObj != null)
-        {
-            objX = boxObj.GetComponent<Renderer>().bounds.size.x * objScale;
-            objZ = boxObj.GetComponent<Renderer>().bounds.size.z * objScale;
-        }
-        objX += spacing;
-        objZ += spacing;
-
-
-        for(int x = 0; x < gridX; x++)
+        for (int x = 0; x < gridX; x++)
         {
             grid[x] = new GameObject[gridZ];
             for(int z=0;z< gridZ; z++)
@@ -136,7 +135,7 @@ public class BoxFlow : MonoBehaviour
                 newObj.transform.localScale = newObj.transform.localScale * objScale;
                 if (rotateEnabled && !scaleEnabled)
                 {
-                    newObj.transform.localScale = newObj.transform.localScale + new Vector3(0,5,0);
+                    newObj.transform.localScale =  new Vector3(newObj.transform.localScale.x, 3, newObj.transform.localScale.z);
                 }
                 grid[x][z] = newObj;
             }

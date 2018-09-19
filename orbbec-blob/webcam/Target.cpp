@@ -1,11 +1,11 @@
 #include "Target.h"
 
 
-Target::Target(Rect r,Point p) {
+Target::Target(Rect r,Point p,int t) {
 	centre = p;
 	bbox = r;
 	life =2;
-	tolerance = 75;
+	tolerance = t;
 	id = -1;
 }
 

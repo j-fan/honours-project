@@ -7,10 +7,10 @@ private:
 	Rect bbox;
 	Point centre;
 	int life;
-	int tolerance;
 	int id;
+	int tolerance = 75;
 public:
-	Target(Rect r, Point p);
+	Target(Rect r, Point p, int t);
 	void addLife();
 	void die();
 	// if the new centre is nearby to the the previously

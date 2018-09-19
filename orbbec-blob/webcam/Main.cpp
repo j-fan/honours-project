@@ -28,6 +28,7 @@ Targets targets;
 uint16_t minDistance = 10;
 uint16_t maxDistance = 3000;//2000; //measured in mm
 int minArea = 0;
+int targetTolerance = 75;
 
 
 /*
@@ -90,14 +91,16 @@ int main(int argc, char* argv[])
 
 
 	//cout << "argc " << argc << "\n";
-	if (argc == 4) {
+	if (argc == 5) {
 		minDistance = strtol(argv[1], NULL, 0);
 		maxDistance = strtol(argv[2], NULL, 0);
 		minArea = strtol(argv[3], NULL, 0);
+		targetTolerance = strtol(argv[4], NULL, 0);
 	}
 	cout << "mininum distance: " << minDistance << "\n";;
 	cout << "maximum distance: " << maxDistance << "\n";
 	cout << "min area: " << minArea << "\n";
+	cout << "blob tolerance: " << targetTolerance << "\n";
 
 	showFrames(capture);
 	return 0;
@@ -198,7 +201,7 @@ static void blobDetect(Mat& image) {
 			float centreY = (boundRect.y + boundRect.height / 2) ;
 			Point centre = Point(centreX,centreY);
 
-			Target newTarget = Target(boundRect, centre);
+			Target newTarget = Target(boundRect, centre,targetTolerance);
 			int id = targets.addTarget(newTarget);
 			
 			if (id > targets.getNumTargets() || id < 0) id = -1;

@@ -33,7 +33,7 @@ public class GridFlow : MonoBehaviour {
     void Start()
     {
         gridOffset = GetComponent<Transform>().position;
-        gridOffset = gridOffset - new Vector3(cellSize * 0.5f, 0, cellSize * 0.5f);  //make cells centered
+        //gridOffset = gridOffset + new Vector3(cellSize  , 0, cellSize );  
         updateMesh();
         makeGrid();
     }
