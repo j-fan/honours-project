@@ -9,7 +9,7 @@
 
 
 
-./webcam.exe 10 3000 1000
+./webcam.exe 0 2000 500 10 //IML config
 
 
 
