@@ -26,9 +26,11 @@ Targets targets;
 
 // clip the depth map to certain range to remove background
 uint16_t minDistance = 10;
-uint16_t maxDistance = 3000;//2000; //measured in mm
+uint16_t maxDistance = 3000; // measured in mm
 int minArea = 0;
-int targetTolerance = 75;
+int targetTolerance = 75; // (distance before two blobs are considered the same)
+int topMaskSize = 0;
+int botMaskSize = 0;
 
 
 /*
@@ -89,18 +91,24 @@ int main(int argc, char* argv[])
 		cout << "\nDevice doesn't contain depth generator or it is not selected." << endl;
 	}
 
-
-	//cout << "argc " << argc << "\n";
-	if (argc == 5) {
+	if (argc >= 5) {
 		minDistance = strtol(argv[1], NULL, 0);
 		maxDistance = strtol(argv[2], NULL, 0);
 		minArea = strtol(argv[3], NULL, 0);
 		targetTolerance = strtol(argv[4], NULL, 0);
 	}
+
+	if (argc == 7) {
+		topMaskSize = strtol(argv[5], NULL, 0);
+		botMaskSize = strtol(argv[6], NULL, 0);
+	}
+
 	cout << "mininum distance: " << minDistance << "\n";;
 	cout << "maximum distance: " << maxDistance << "\n";
-	cout << "min area: " << minArea << "\n";
-	cout << "blob tolerance: " << targetTolerance << "\n";
+	cout << "minimum contour area: " << minArea << "\n";
+	cout << "blob tolerance : " << targetTolerance << "\n";
+	cout << "top mask size: " << topMaskSize << "\n";
+	cout << "bottom mask size: " << botMaskSize << "\n";
 
 	showFrames(capture);
 	return 0;
@@ -151,16 +159,14 @@ static void blobDetect(Mat& image) {
 	}
 
 	image.convertTo(image, CV_8UC1, scaleFactor);
-	//convert to colour to help distinguish overlapping objects (of different depth)
-	//applyColorMap(image, image, COLORMAP_JET);
-
-
-	// rotate img
-	//rotate(image, image, ROTATE_90_COUNTERCLOCKWISE);
 
 	//down scale image to increase performance
 	resize(image, image, Size(image.cols/2,image.rows/2));
 	imshow("Raw Image", image);
+
+	// mask top and bottom edge for tunnel setup
+	rectangle(image, Point(0, 0), Point(image.cols, topMaskSize), Scalar(0, 0, 0), CV_FILLED, 8);
+	rectangle(image, Point(0, image.rows - botMaskSize), Point(image.cols, image.rows), Scalar(0, 0, 0), CV_FILLED, 8);
 
 	// Apply dilation to reduce noise
 	int dilation_size = 3;
@@ -244,8 +250,9 @@ static void showFrames(VideoCapture capture) {
 			}
 
 			if (capture.retrieve(colourImage, CAP_OPENNI_BGR_IMAGE)) {
-				// rotate img
-				//rotate(colourImage, colourImage, ROTATE_90_COUNTERCLOCKWISE);
+				// mask top and bottom edge for tunnel setup
+				rectangle(colourImage, Point(0, 0), Point(colourImage.cols, topMaskSize * 2), Scalar(0, 0, 0), CV_FILLED, 8);
+				rectangle(colourImage, Point(0, colourImage.rows - botMaskSize * 2), Point(colourImage.cols, colourImage.rows), Scalar(0, 0, 0), CV_FILLED, 8);
 				imshow("rgb image", colourImage);
 			}
 				
