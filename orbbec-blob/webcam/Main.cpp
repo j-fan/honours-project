@@ -2,6 +2,7 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/features2d.hpp"
+#include "opencv2/photo/photo.hpp"
 
 #include <iostream>
 
@@ -128,7 +129,7 @@ static void sendOSC(int rows, int cols) {
 	// origin needs to be changed since opencv origin is top left,
 	// unity is bottom left
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = cols - (targets.getTarget(i).getCentre().x) ; //col - to flip for projection mode 8
+		float centreX = (targets.getTarget(i).getCentre().x) ; //col - to flip for projection mode 8
 		float centreY = rows - (targets.getTarget(i).getCentre().y);
 		//if(i == 0) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
@@ -139,10 +140,9 @@ static void sendOSC(int rows, int cols) {
 }
 
 static void blobDetect(Mat& image) {
-
-	float scaleFactor = 0.5f; //0.1f; //for colormap
-
 	
+	// old depth processing code
+	/*float scaleFactor = 0.5f; //0.1f; //for colormap
 	for (int y = 0; y < image.rows; y++)
 	{
 		for (int x = 0; x < image.cols; x++)
@@ -161,9 +161,9 @@ static void blobDetect(Mat& image) {
 	image.convertTo(image, CV_8UC1, scaleFactor);
 
 	//down scale image to increase performance
-	resize(image, image, Size(image.cols/2,image.rows/2));
+	//resize(image, image, Size(image.cols/2,image.rows/2));
 	imshow("Raw Image", image);
-
+	
 	// mask top and bottom edge for tunnel setup
 	rectangle(image, Point(0, 0), Point(image.cols, topMaskSize), Scalar(0, 0, 0), CV_FILLED, 8);
 	rectangle(image, Point(0, image.rows - botMaskSize), Point(image.cols, image.rows), Scalar(0, 0, 0), CV_FILLED, 8);
@@ -177,7 +177,31 @@ static void blobDetect(Mat& image) {
 
 	//blur
 	medianBlur(image,image, 31);
-	imshow("Smoothed Image", image);
+	imshow("Smoothed Image", image);*/
+
+	//convert from raw data to rgb image
+	float scaleFactor = 0.05f;
+	image.convertTo(image, CV_8UC1, scaleFactor);
+	// fill holes in depth data with inpainting
+	const unsigned char noDepth = 0; // change to 255, if values no depth uses max value 
+	Mat temp, temp2; // 1 step - downsize for performance, use a smaller version of depth image 
+	Mat small_depthf; resize(image, small_depthf, Size(), 0.2, 0.2); // 2 step - inpaint only the masked "unknown" pixels 
+	inpaint(small_depthf, (small_depthf == noDepth), temp, 5.0, INPAINT_TELEA); // 3 step - upscale to original size and replace inpainted regions in original depth image 
+	resize(temp, temp2, image.size()); temp2.copyTo(image, (image == noDepth)); // add to the original signal 
+	bitwise_not(image, image);
+	imshow("depth-inpaint", image); // show results 
+	// cut off depth
+	int cutoff = (8000.0f - maxDistance) / 8000 * 256;
+	threshold(image, image, cutoff, 255, 0);
+	//smooth edges
+	medianBlur(image, image, 11);
+	//deal with bug in inpaint causing border artefacts
+	rectangle(image, Point(0, 0), Point(image.cols, 5), Scalar(0, 0, 0), CV_FILLED, 8);
+	rectangle(image, Point(0, 0), Point(6, image.rows), Scalar(0, 0, 0), CV_FILLED, 8);
+	imshow("thresholded inpaint", image); // show results 
+	// mask top and bottom edge for tunnel setup
+	rectangle(image, Point(0, 0), Point(image.cols, topMaskSize), Scalar(0, 0, 0), CV_FILLED, 8);
+	rectangle(image, Point(0, image.rows - botMaskSize), Point(image.cols, image.rows), Scalar(0, 0, 0), CV_FILLED, 8);
 
 	// Find Blobs by finding contours and calculate bounding boxes
 	Mat canny_output;

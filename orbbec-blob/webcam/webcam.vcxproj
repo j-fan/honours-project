@@ -127,7 +127,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\oscpack\bin\Release;$(OPENCV_DIR)\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_highgui341.lib;opencv_imgproc341.lib;opencv_videoio341.lib;opencv_core341.lib;opencv_features2d341.lib;opencv_objdetect341.lib;oscpack.lib;Ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_photo341.lib;opencv_highgui341.lib;opencv_imgproc341.lib;opencv_videoio341.lib;opencv_core341.lib;opencv_features2d341.lib;opencv_objdetect341.lib;oscpack.lib;Ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
