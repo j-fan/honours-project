@@ -180,7 +180,7 @@ static void blobDetect(Mat& image) {
 	imshow("Smoothed Image", image);*/
 
 	//convert from raw data to rgb image
-	float scaleFactor = 0.05f;
+	float scaleFactor = 256.0f / 8000;
 	image.convertTo(image, CV_8UC1, scaleFactor);
 	// fill holes in depth data with inpainting
 	const unsigned char noDepth = 0; // change to 255, if values no depth uses max value 
