@@ -129,8 +129,8 @@ static void sendOSC(int rows, int cols) {
 	// origin needs to be changed since opencv origin is top left,
 	// unity is bottom left
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = (targets.getTarget(i).getCentre().x) ; //col - to flip for projection mode 8
-		float centreY = rows - (targets.getTarget(i).getCentre().y);
+		float centreX = (targets.getTarget(i).getCentre().x) ; //default : (targets.getTarget(i).getCentre().x)
+		float centreY = rows - (targets.getTarget(i).getCentre().y); // default : rows - (targets.getTarget(i).getCentre().y);
 		//if(i == 0) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
 		p << (float)centreY;

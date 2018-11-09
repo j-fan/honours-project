@@ -51,8 +51,8 @@ public class Targets : MonoBehaviour {
 
         for (int i = 0; i < currentAttractors; i++)
         {
-            float x = message.GetFloat(i * 2) / 3f;
-            float y = message.GetFloat(i * 2 + 1) / 3f;
+            float x = message.GetFloat(i * 2) / 6f;
+            float y = message.GetFloat(i * 2 + 1) / 6f;
             //if(i==0) print(x + " " + y);
             Vector3 newPos = new Vector3(x, 5.0f, y);
             Vector3 oldPos = attractors[i].transform.position;
