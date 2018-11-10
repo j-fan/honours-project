@@ -9,7 +9,7 @@ public class ParticleFlow : MonoBehaviour {
     const int GRAVITY = 1;
     const int SIMPLE = 2;
     const int VORTEX = 3;
-    const int WALL = 4;
+    const int AIRFLOW = 4;
     public int simType = ELECTRIC;
 
     public Targets targets;
@@ -84,9 +84,9 @@ public class ParticleFlow : MonoBehaviour {
                 totalForce = applyElectric(p);
             } else if (simType == VORTEX) {
                 totalForce = applyVortex(p);
-            } else if (simType == WALL)
+            } else if (simType == AIRFLOW)
             {
-                totalForce = new Vector3(0,particleWorldPosition.y,0);
+                totalForce = applyAirFlow(particleWorldPosition);
             } else
             {
                 totalForce = applySimple(particleWorldPosition);
@@ -126,6 +126,38 @@ public class ParticleFlow : MonoBehaviour {
         ps.SetParticles(particles, particles.Length); //set updated particles into the system
     }
 
+    // potential flow  https://github.com/arkaragian/Fluid-Field/blob/master/field.js
+    Vector3 applyAirFlow(Vector3 particleWorldPosition)
+    {
+        Vector3 direction =  (Vector3.back * 10);
+        float distance = float.MaxValue; // used to find closest attractor
+        float maxDistance = 20f;
+        float fieldStrength = 10f;
+
+        List<GameObject> attractors = targets.getTargets();
+
+        for (int i = 0; i < targets.getCurrentAttractors(); i++)
+        {
+            GameObject a = attractors[i];
+            distance = Vector3.Distance(particleWorldPosition, a.transform.position);
+            if (distance < maxDistance)
+            {
+
+                float dx = particleWorldPosition.x - a.transform.position.x;
+                float dz = particleWorldPosition.z - a.transform.position.z;
+                
+                float angle = Mathf.Atan2(dz, dx);
+                float ux = (fieldStrength / distance) * Mathf.Cos(angle);
+                float uz = (fieldStrength / distance) * Mathf.Sin(angle);
+
+                float falloff = ((maxDistance - distance) / distance);
+                direction = direction + new Vector3(ux, 0, uz) * falloff ;
+            }
+
+        }
+        Vector3 totalForce = direction * forceMultiplier * Time.deltaTime;
+        return totalForce;
+    }
     Vector3 applySimple(Vector3 particleWorldPosition)
     {
         Vector3 direction = Vector3.zero;
