@@ -14,7 +14,8 @@ public class BoxFlow : MonoBehaviour
     public float animScale = 1.0f; 
     public float objScale = 1.0f;
     public bool rotateEnabled = true;
-    public bool scaleEnabled = true;
+    public bool scaleHeightEnabled = true;
+    public bool pinModeEnabled = false;
     public float noiseScale = 0.07f;
     public float targetRadius = 10.0f;
 
@@ -24,7 +25,6 @@ public class BoxFlow : MonoBehaviour
     Vector3 centre; // parent empty location
     float objX = 1.0f;
     float objZ = 1.0f;
-
 
     // Use this for initialization
     void Start()
@@ -71,10 +71,19 @@ public class BoxFlow : MonoBehaviour
         {
             for (int z = 0; z < gridZ; z++)
             {
+                //allow changes to box cell scale
+                grid[x][z].transform.localScale = new Vector3(objScale, grid[x][z].transform.localScale.y, objScale);
 
                 Vector3 s = grid[x][z].transform.localScale;
+                if (pinModeEnabled)
+                {
+                    float rotateBeat = beatsFFT.runningAvgFreq * 360 * animScale;
+                    float rotateNoise = Mathf.PerlinNoise(x * noiseScale + Time.time, z * noiseScale + Time.time);
+                    grid[x][z].transform.Rotate(new Vector3(1,1,0), Mathf.Clamp(rotateBeat*rotateNoise*10,0,10));
+                    grid[x][z].transform.localScale = new Vector3(objScale, objScale * 0.15f, objScale * 0.15f);
+                }
                 //animate scale
-                if (scaleEnabled)
+                if (scaleHeightEnabled && !pinModeEnabled)
                 {     
                     float noiseHeight = Mathf.PerlinNoise(x * noiseScale * Time.time, z * noiseScale * Time.time);
                     float heightScale = beatsFFT.runningAvgFreq * 2000 * animScale;
@@ -82,12 +91,12 @@ public class BoxFlow : MonoBehaviour
                     grid[x][z].transform.localScale = new Vector3(s.x, height, s.z);
                 }
                 //animate rotation
-                if (rotateEnabled)
+                if (rotateEnabled && !pinModeEnabled)
                 {
-                    float rotate = beatsFFT.runningAvgFreq * 360 * animScale;
+                    float rotateBeat = beatsFFT.runningAvgFreq * 360 * animScale;
                     float noiseDirectionX = Mathf.PerlinNoise(x * noiseScale, Time.time);
                     float noiseDirectionZ = Mathf.PerlinNoise(z * noiseScale, Time.time);
-                    grid[x][z].transform.Rotate(new Vector3(noiseDirectionX, 0, noiseDirectionZ), rotate);
+                    grid[x][z].transform.Rotate(new Vector3(noiseDirectionX, 0, noiseDirectionZ), rotateBeat);
                 }
                 // flatten radius around targets
                 foreach (GameObject a in targets.getTargets())
@@ -98,16 +107,14 @@ public class BoxFlow : MonoBehaviour
                         float distanceRatio = distance / targetRadius;
                         //Vector3 oldScale = grid[x][z].transform.localScale;
                         Quaternion oldRotation = grid[x][z].transform.rotation;
-                        if (scaleEnabled)
+                        if (scaleHeightEnabled)
                             grid[x][z].transform.localScale = Vector3.Lerp(new Vector3(s.x, 10, s.z), new Vector3(s.x, 1, s.z), distanceRatio*distanceRatio);
-                        if (rotateEnabled)
+                        if (rotateEnabled || pinModeEnabled)
                             grid[x][z].transform.rotation = Quaternion.Lerp(Quaternion.identity, oldRotation, distanceRatio);
                         break;
                     }
                 }
 
-                //allow changes to box cell scale
-                grid[x][z].transform.localScale = new Vector3(objScale, grid[x][z].transform.localScale.y, objScale);
             }
         }
     }
@@ -130,13 +137,11 @@ public class BoxFlow : MonoBehaviour
                 }
                 newObj.GetComponent<Renderer>().material = material;
                 float hue = ((float)z + ((float)x * gridZ)) / (gridX*gridZ);
-                newObj.GetComponent<Renderer>().material.color = Color.HSVToRGB(hue,1.0f,0.3f);
+                Color colour = Color.HSVToRGB(hue, 1.0f, 0.5f);
+                newObj.GetComponent<Renderer>().material.color = colour;
                 newObj.transform.position = new Vector3(x*objX + centre.x, centre.y, z*objZ+centre.z);
                 newObj.transform.localScale = newObj.transform.localScale * objScale;
-                if (rotateEnabled && !scaleEnabled)
-                {
-                    newObj.transform.localScale =  new Vector3(newObj.transform.localScale.x, 3, newObj.transform.localScale.z);
-                }
+
                 grid[x][z] = newObj;
             }
         }
