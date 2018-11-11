@@ -453,7 +453,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1638306701
+  randomSeed: -1097804382
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7588,7 +7588,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -90506032
+  randomSeed: -1244849014
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -18094,7 +18094,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 47740983
+  randomSeed: 752901142
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -39864,7 +39864,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1312750432
+  randomSeed: -922942067
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -46826,21 +46826,22 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1905391626}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 174cfdc140ea3314ca0df51c676d8e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   boxObj: {fileID: 0}
   targets: {fileID: 1280316905}
-  material: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  material: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   gridX: 45
   gridZ: 30
   spacing: 0.2
   animScale: 0.8
   objScale: 2
-  rotateEnabled: 1
-  scaleEnabled: 1
+  rotateEnabled: 0
+  scaleHeightEnabled: 0
+  pinModeEnabled: 1
   noiseScale: 0.07
   targetRadius: 10
   beatsFFT: {fileID: 1359321854}
