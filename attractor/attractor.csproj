@@ -283,17 +283,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Attractor\Scripts\AtomFlow.cs" />
+    <Compile Include="Assets\Attractor\Scripts\AtomFlowController.cs" />
     <Compile Include="Assets\Attractor\Scripts\BeatsFFT.cs" />
     <Compile Include="Assets\Attractor\Scripts\BoxEmit.cs" />
     <Compile Include="Assets\Attractor\Scripts\BoxEmitNoise.cs" />
     <Compile Include="Assets\Attractor\Scripts\BoxFlow.cs" />
     <Compile Include="Assets\Attractor\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\Attractor\Scripts\ColumnFlow.cs" />
     <Compile Include="Assets\Attractor\Scripts\FastNoise.cs" />
     <Compile Include="Assets\Attractor\Scripts\Flowfield.cs" />
     <Compile Include="Assets\Attractor\Scripts\GridFlow.cs" />
     <Compile Include="Assets\Attractor\Scripts\MultiScreenOn.cs" />
     <Compile Include="Assets\Attractor\Scripts\ParticleFlow.cs" />
     <Compile Include="Assets\Attractor\Scripts\ParticlePlexus.cs" />
+    <Compile Include="Assets\Attractor\Scripts\SceneControl.cs" />
     <Compile Include="Assets\Attractor\Scripts\Targets.cs" />
     <Compile Include="Assets\Attractor\Scripts\TubeRenderer.cs" />
     <Compile Include="Assets\Attractor\Scripts\TubeTrails.cs" />
