@@ -18,6 +18,8 @@ public class BoxEmit : MonoBehaviour {
 	void Update () {
         if (!init) 
         {
+            createParticleSystems();
+            init = true;
             return;
         }
         List<GameObject> targs = targets.getTargets();
@@ -63,15 +65,17 @@ public class BoxEmit : MonoBehaviour {
             Destroy(b);
         }
         boxEmitters.Clear();
+        init = false;
     }
 
     private void OnEnable()
     {
-        if (!init)
+        if (!init && targets.getTargets() != null)
         {
+            createParticleSystems();
             init = true;
         }
-        createParticleSystems();
+        
 
     }
 

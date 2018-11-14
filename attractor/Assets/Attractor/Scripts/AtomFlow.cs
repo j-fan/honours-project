@@ -13,7 +13,25 @@ public class AtomFlow : MonoBehaviour {
     void Start () {
         rigidbody = GetComponent<Rigidbody>();
 	}
+
+    void OnDisable()
+    {
+        rigidbody.isKinematic = true;
+        rigidbody.detectCollisions = false;
+        GetComponent<MeshRenderer>().enabled = false;
+    }
 	
+    void OnEnable()
+    {
+        if(rigidbody != null)
+        {
+            rigidbody.isKinematic = false;
+            rigidbody.detectCollisions = true;
+            GetComponent<MeshRenderer>().enabled = true;
+        }
+
+    }
+
 	// Update is called once per frame
 	void Update () {
         if(attractor != null)

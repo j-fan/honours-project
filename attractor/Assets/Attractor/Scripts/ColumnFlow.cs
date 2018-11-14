@@ -17,7 +17,9 @@ public class ColumnFlow : MonoBehaviour {
     const int NOISE = 1;
     const int SLIDEY = 2;
     const int RACE = 3;
+    const int FALLING = 4;
     public int animationType = SHUTTER;
+    public float transparency = 1.0f;
 
     // Use this for initialization
     void Start () {
@@ -53,11 +55,18 @@ public class ColumnFlow : MonoBehaviour {
             case RACE:
                 raceColumns(5f);
                 break;
+            case FALLING:
+                fallingColumns(3f);
+                break;
             default:
                 shutterColumns();
                 break;
         }
         updateMesh();
+        Material mat = GetComponent<Renderer>().material;
+        Color oldColor = mat.color;
+        Color newColor = new Color(oldColor.r,oldColor.g, oldColor.b, transparency);
+        mat.SetColor("_Color", newColor);
     }
 
     void noiseColumns(float noiseSpeed)
@@ -109,6 +118,17 @@ public class ColumnFlow : MonoBehaviour {
         }
     }
 
+    void fallingColumns(float noiseSpeed)
+    {
+        for (int i = 0; i < numCols; i++)
+        {
+            Rect oldRect = rects[i];
+            float height = (Mathf.Abs(fastnoise.GetSimplex(oldRect.x * noiseSpeed + Time.time, oldRect.y * noiseSpeed * Time.time))) * maxHeight * 2;
+            Rect newRect = new Rect(oldRect.x, maxHeight-height, oldRect.width, height);
+            addRectToMesh(newRect);
+        }
+    }
+
     void initColumns()
     {
         float h = maxHeight;
@@ -132,6 +152,7 @@ public class ColumnFlow : MonoBehaviour {
     {
         mesh.vertices = verts.ToArray();
         mesh.triangles = tris.ToArray();
+        mesh.RecalculateNormals();
     }
     void addRectToMesh(Rect r)
     {

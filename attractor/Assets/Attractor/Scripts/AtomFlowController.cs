@@ -14,6 +14,33 @@ public class AtomFlowController : MonoBehaviour {
         
 	}
 
+    void OnDisable()
+    {
+        foreach(List<GameObject> target in atoms)
+        {
+            foreach(GameObject atom in target)
+            {
+                //print(atom);
+                atom.GetComponent<AtomFlow>().enabled = false;
+            }
+        }
+    }
+
+    void OnEnable()
+    {
+        if (isInit)
+        {
+            foreach (List<GameObject> target in atoms)
+            {
+                foreach (GameObject atom in target)
+                {
+                    atom.GetComponent<AtomFlow>().enabled = true;
+                }
+            }
+        }
+
+    }
+
     void generateAtoms()
     {
         List<GameObject> attractors = targets.getTargets();
