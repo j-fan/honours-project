@@ -44,7 +44,7 @@ public class AtomFlowController : MonoBehaviour {
     void generateAtoms()
     {
         List<GameObject> attractors = targets.getTargets();
-        for (int i = 0; i < targets.getCurrentAttractors(); i++)
+        for (int i = 0; i < 8; i++) //hack to fix instantiation lag for now
         {
             GameObject target = attractors[i];
             List<GameObject> atomsForTarget = new List<GameObject>();
@@ -53,6 +53,7 @@ public class AtomFlowController : MonoBehaviour {
                 GameObject newAtom = Instantiate(atomObject) as GameObject;
                 newAtom.transform.position = target.transform.position + new Vector3(Random.Range(0,0.1f), Random.Range(0, 0.1f), Random.Range(0, 0.1f));
                 float hue = (float)i / targets.getCurrentAttractors();
+                newAtom.GetComponent<AtomFlow>().enabled = true;
                 newAtom.GetComponent<AtomFlow>().attractor = target;
                 atomsForTarget.Add(newAtom);
             }
