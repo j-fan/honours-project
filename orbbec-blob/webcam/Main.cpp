@@ -129,7 +129,7 @@ static void sendOSC(int rows, int cols) {
 	// origin needs to be changed since opencv origin is top left,
 	// unity is bottom left
 	for (int i = 0; i < targets.getNumTargets(); i++) {
-		float centreX = (targets.getTarget(i).getCentre().x) ; //default : (targets.getTarget(i).getCentre().x)
+		float centreX = cols - (targets.getTarget(i).getCentre().x) ; //default : (targets.getTarget(i).getCentre().x)
 		float centreY = rows - (targets.getTarget(i).getCentre().y); // default : rows - (targets.getTarget(i).getCentre().y);
 		//if(i == 0) cout << centreX << "...." << centreY << "\n";
 		p << (float)centreX;
@@ -182,6 +182,7 @@ static void blobDetect(Mat& image) {
 	//convert from raw data to rgb image
 	float scaleFactor = 256.0f / 8000;
 	image.convertTo(image, CV_8UC1, scaleFactor);
+
 	// fill holes in depth data with inpainting
 	const unsigned char noDepth = 0; // change to 255, if values no depth uses max value 
 	Mat temp, temp2; // 1 step - downsize for performance, use a smaller version of depth image 
@@ -202,6 +203,7 @@ static void blobDetect(Mat& image) {
 	// mask top and bottom edge for tunnel setup
 	rectangle(image, Point(0, 0), Point(image.cols, topMaskSize), Scalar(0, 0, 0), CV_FILLED, 8);
 	rectangle(image, Point(0, image.rows - botMaskSize), Point(image.cols, image.rows), Scalar(0, 0, 0), CV_FILLED, 8);
+	imshow("mask top bottom", image);
 
 	// Find Blobs by finding contours and calculate bounding boxes
 	Mat canny_output;

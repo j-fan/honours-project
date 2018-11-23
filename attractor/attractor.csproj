@@ -285,6 +285,7 @@
   <ItemGroup>
     <Compile Include="Assets\Attractor\Scripts\AtomFlow.cs" />
     <Compile Include="Assets\Attractor\Scripts\AtomFlowController.cs" />
+    <Compile Include="Assets\Attractor\Scripts\audioLineIn.cs" />
     <Compile Include="Assets\Attractor\Scripts\BeatsFFT.cs" />
     <Compile Include="Assets\Attractor\Scripts\BoxEmit.cs" />
     <Compile Include="Assets\Attractor\Scripts\BoxEmitNoise.cs" />
