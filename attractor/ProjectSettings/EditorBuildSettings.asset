@@ -14,3 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Attractor/exhibition pt2.unity
     guid: a3b29b63acdf8564e9bce9b4e37de3aa
+  - enabled: 1
+    path: Assets/Attractor/annual.unity
+    guid: df8fa906598774d429c5d22efd8fe39d

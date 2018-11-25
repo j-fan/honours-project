@@ -20,6 +20,8 @@ public class ColumnFlow : MonoBehaviour {
     const int FALLING = 4;
     public int animationType = SHUTTER;
     public float transparency = 1.0f;
+    public float speedModifier = 1.0f;
+    public BeatsFFT beatsFFT;
 
     // Use this for initialization
     void Start () {
@@ -47,16 +49,16 @@ public class ColumnFlow : MonoBehaviour {
                 shutterColumns();
                 break;
             case NOISE:
-                noiseColumns(30f);
+                noiseColumns(30f * speedModifier);
                 break;
             case SLIDEY:
-                slideyColumns(2f);
+                slideyColumns(2f * speedModifier);
                 break;
             case RACE:
-                raceColumns(5f);
+                raceColumns(5f*speedModifier*(beatsFFT.runningAvgFreq*200));
                 break;
             case FALLING:
-                fallingColumns(3f);
+                fallingColumns(3f * speedModifier);
                 break;
             default:
                 shutterColumns();

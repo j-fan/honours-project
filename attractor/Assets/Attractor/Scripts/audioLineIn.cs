@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Audio; // required for dealing with audiomixers
 
 [RequireComponent(typeof(AudioSource))]
-public class audioLineIn : MonoBehaviour
+public class AudioLineIn : MonoBehaviour
 {
 
     //Written in part by Benjamin Outram
