@@ -14,7 +14,7 @@ public class AudioLineIn : MonoBehaviour
     {
         src = GetComponent<AudioSource>();
 
-        if(Microphone.devices.Length > 0)
+        if (Microphone.devices.Length > 0)
         {
             string device = Microphone.devices[0].ToString();
             Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);
@@ -27,7 +27,8 @@ public class AudioLineIn : MonoBehaviour
             src.clip = Microphone.Start(device, true, 5, maxFreq);
             src.outputAudioMixerGroup = microphoneMixer;
             src.Play();
-        } else
+        }
+        else
         {
             print("NO MICROPHONES FOUND");
         }

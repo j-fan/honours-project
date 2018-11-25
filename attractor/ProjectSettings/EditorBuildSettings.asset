@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Attractor/Master.unity
     guid: fb7af4deb6ef11c43bc1374403204d43
-  - enabled: 1
+  - enabled: 0
     path: Assets/Attractor/exhibition pt1.unity
     guid: d4b0adcae1c96894d986ae557619437b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Attractor/exhibition pt2.unity
     guid: a3b29b63acdf8564e9bce9b4e37de3aa
   - enabled: 1

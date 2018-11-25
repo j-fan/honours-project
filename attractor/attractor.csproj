@@ -285,7 +285,7 @@
   <ItemGroup>
     <Compile Include="Assets\Attractor\Scripts\AtomFlow.cs" />
     <Compile Include="Assets\Attractor\Scripts\AtomFlowController.cs" />
-    <Compile Include="Assets\Attractor\Scripts\audioLineIn.cs" />
+    <Compile Include="Assets\Attractor\Scripts\AudioLineIn.cs" />
     <Compile Include="Assets\Attractor\Scripts\BeatsFFT.cs" />
     <Compile Include="Assets\Attractor\Scripts\BoxEmit.cs" />
     <Compile Include="Assets\Attractor\Scripts\BoxEmitNoise.cs" />
@@ -299,7 +299,9 @@
     <Compile Include="Assets\Attractor\Scripts\ParticleFlow.cs" />
     <Compile Include="Assets\Attractor\Scripts\ParticlePlexus.cs" />
     <Compile Include="Assets\Attractor\Scripts\SceneControl.cs" />
+    <Compile Include="Assets\Attractor\Scripts\SceneControlAnnual.cs" />
     <Compile Include="Assets\Attractor\Scripts\Targets.cs" />
+    <Compile Include="Assets\Attractor\Scripts\TimelineControl.cs" />
     <Compile Include="Assets\Attractor\Scripts\TubeRenderer.cs" />
     <Compile Include="Assets\Attractor\Scripts\TubeTrails.cs" />
     <Compile Include="Assets\Attractor\testing\testTube.cs" />

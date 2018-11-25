@@ -31,6 +31,10 @@ public class BeatsFFT : MonoBehaviour {
             avgFreq = avgFreq + asamples[i];
         }
         avgFreq = avgFreq * avgFreq;
+        if (audioSource.clip.name == "Microphone") //boost levels for mic
+        {
+            avgFreq *= 1000;
+        }
         avgFreq = avgFreq / asamples.Length;
         runningAvgFreq = (avgFreq * alpha) + ((1 - alpha) * runningAvgFreq);
 

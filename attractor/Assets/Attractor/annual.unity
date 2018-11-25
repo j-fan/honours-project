@@ -381,8 +381,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 281322724}
-  - component: {fileID: 281322723}
   - component: {fileID: 281322722}
+  - component: {fileID: 281322723}
   m_Layer: 0
   m_Name: AudioIn
   m_TagString: Untagged
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 281322721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d3f023a8579be47b2041241dad918d, type: 3}
+  m_Script: {fileID: 11500000, guid: c48e967c881349747b73f0611f22567f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   microphoneMixer: {fileID: 243141737137077858, guid: cc8806e2984aeda47926c4b39386e415,
@@ -32948,6 +32948,7 @@ MonoBehaviour:
   audioSource: {fileID: 281322722}
   avgFreq: 0
   runningAvgFreq: 0
+  isUsingMic: 1
 --- !u!4 &1359321855
 Transform:
   m_ObjectHideFlags: 0
