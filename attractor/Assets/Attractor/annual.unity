@@ -396,14 +396,14 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 281322721}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -476,16 +476,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 281322721}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07d3f023a8579be47b2041241dad918d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMicOnStartup: 1
-  stopMicrophoneListener: 0
-  startMicrophoneListener: 1
-  disableOutputSound: 0
-  masterMixer: {fileID: 24100000, guid: cc8806e2984aeda47926c4b39386e415, type: 2}
+  microphoneMixer: {fileID: 243141737137077858, guid: cc8806e2984aeda47926c4b39386e415,
+    type: 2}
 --- !u!4 &281322724
 Transform:
   m_ObjectHideFlags: 0
@@ -7633,6 +7630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32f667c86943b342b16ddb962bc5b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoRestartEnabled: 1
+  autoRestartDuration: 18
+  beatsFFT: {fileID: 1359321854}
 --- !u!1 &424954653
 GameObject:
   m_ObjectHideFlags: 0
@@ -32945,7 +32945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3ba177e1f2a124e90cf5e3db7eaedd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 1553320891}
+  audioSource: {fileID: 281322722}
   avgFreq: 0
   runningAvgFreq: 0
 --- !u!4 &1359321855
