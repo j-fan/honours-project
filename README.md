@@ -16,7 +16,7 @@ Portfolio : https://j-fan.github.io/portfolio/
 
 As a disclaimer, I am only a student with limited C++ and C# experience so your mileage may vary.
 
-Built Unity 2017.3.1f1
+Built Unity 2017.3.1f1 so not guaranteed to work with newer versions
 
 A depth camera that uses openNI (orbbec astra in this case)
 
