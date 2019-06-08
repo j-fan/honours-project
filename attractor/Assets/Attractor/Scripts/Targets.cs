@@ -6,7 +6,7 @@ public class Targets : MonoBehaviour {
 
     public OSC osc;
     int numTargets = 0; //targets refer to targets detected by orbbec/opencv
-    int currentAttractors = 15;
+    int currentAttractors = 8;
     List<GameObject> attractors;
     float alpha = 0.3f; //lowpass filter positions for smooth movement, lower number for more smoothing
     public GameObject targetObject;
