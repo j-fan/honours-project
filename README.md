@@ -34,8 +34,6 @@ OPENCV_DIR: add path to opencv folder
 
 <h2> Credits </h2>
 
-Keijiro Takahashi for unity post-processing effects
-
 Mirza Beig for particle plexus code
 
 UnityOSC https://github.com/thomasfredericks/UnityOSC
